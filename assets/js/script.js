@@ -28,7 +28,8 @@ $("document").ready(function() {
 		// simply replacing the space in the search with %20 to be placed into the URL
 		ingredient = ingredient.replace(" ", "%2C%20")
 		ingredientsChosen.push(ingredient);
-		searchURL = "https://yummly2.p.rapidapi.com/feeds/search?start=0&maxResult=18&q=" + ingredient
+		searchURL = "https://yummly2.p.rapidapi.com/feeds/search?start=0&maxResult=18&q=" + ingredientsChosen
+		console.log(searchURL)
 		fetch(searchURL, options)
 			.then(function(response) {
 				return response.json()
@@ -36,25 +37,29 @@ $("document").ready(function() {
 			.then(function(data) {
 				// stores the WHOLE data of every recipe
 				recipeData = data.feed
-				//console.log(recipeData)
+				console.log(recipeData)
 				// stores ONLY the recipe names into an array
 				recipeList = []
 				for (var i = 0; i < recipeData.length; i++) {
 					recipeList.push(recipeData[i].content.details.name)
 				}
-				//console.log(recipeList)
+				console.log(recipeList)
 				// stores the WHOLE data of every ingredient in each recipe
 				ingredientData = []
-				for (var j = 0; j < recipeData.length; j++) {
-					ingredientData.push(recipeData[j].content.ingredientLines)
+				for (var i = 0; i < recipeData.length; i++) {
+					ingredientData.push(recipeData[i].content.ingredientLines)
 				}
-				//console.log(ingredientData)
+				console.log(ingredientData)
 				// stores a link to an image that represents the finished dish for each recipe
 				imageList = []
-				for (var k = 0; k < recipeData.length; k++) {
-					imageList.push(recipeData[k].content.details.images[0].hostedLargeUrl)
+				for (var i = 0; i < recipeData.length; i++) {
+					imageList.push(recipeData[i].content.details.images[0].hostedLargeUrl)
 				}
-				//console.log(imageList)
+				console.log(imageList)
+				recipeURL = []
+				for (var i = 0; i < recipeData.length; i++) {
+					recipeURL.push(recipeData[i].content.details.directionsUrl)
+				}
 			})
 			.catch(err => console.error(err))
 
