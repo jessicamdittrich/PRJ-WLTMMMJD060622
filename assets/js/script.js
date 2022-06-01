@@ -15,9 +15,11 @@ $("document").ready(function() {
 	var ingredientData = []
 	var imageList = []
 	var ingredientsChosen = []
+	var recipeURL = []
 	
 	// Initializing the search button
-	$(".button").click(search)
+	$("#search-button").click(search)
+
 	
 	// Initializing search function that retrieves ingredient data and fetches the recipe API
 	function search(event) {
@@ -26,8 +28,6 @@ $("document").ready(function() {
 		// simply replacing the space in the search with %20 to be placed into the URL
 		ingredient = ingredient.replace(" ", "%2C%20")
 		ingredientsChosen.push(ingredient);
-
-
 		searchURL = "https://yummly2.p.rapidapi.com/feeds/search?start=0&maxResult=18&q=" + ingredient
 		fetch(searchURL, options)
 			.then(function(response) {
@@ -74,5 +74,13 @@ $("document").ready(function() {
 			ingredientLi.appendChild(removeButton);
 		}
 	};
+  
+  $("#get-recipes-button").click(populateRecipeList)
+
+	function populateRecipeList() {
+		for (var i = 0; i < recipeList.length; i++) {
+			$("#recipes-list").append($("<li><a href=" + recipeURL[i] + " target='_blank'>" + recipeList[i] + "<img src = " + imageList[i] + "></a></li>"))
+		}
+	}
 
 }); //CODE ABOVE THIS LINE
