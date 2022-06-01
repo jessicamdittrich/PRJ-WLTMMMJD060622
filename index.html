@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>WhatTheFridge.</title>
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Orelega+One&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -14,19 +15,19 @@
     <section class="section">
 
         <div id="main" class="container">
-          <h1 class="title">
-            WhatTheFridge.
-          </h1>
-          <p>
-            <strong>Catchy 1 liner?????? Or description..</strong> Gummies biscuit tiramisu ice cream danish powder oat cake. Chupa chups cookie soufflé cupcake donut sugar.
-          </p>
+            <img src="assets/images/fridge.png" />
+            <h1>WhatTheFridge.</h1>
+            <p>
+                <span class="logotype">WhatTheFridge.</span> was created to provide recipes for new flavourful meals by using ingredients already in the fridge while also combating food waste.
+            </p>
         </div>
 
         <div id="search" class="container">
             <form>
                 <ul>
                     <li><input class="input" type="text" placeholder="tell me what you have in your fridge"></li>
-                    <li><button class="button">Search</button></li>
+                    <li><button id="search-button" class="button">Search</button></li>
+                    <li><button id="saved-button" class="button">Saved</button></li>
                 </ul>
             </form>
         </div>
@@ -35,15 +36,16 @@
             <h3>your chosen ingredients</h3>
             <ul id="ingredients-list">
                 <li>icon | asparagus</li>
-                <li>icon | cherries</li>
-                <li>icon | bread</li>
                 <li>icon | asparagus</li>
-                <li>icon | cherries</li>
-                <li>icon | bread</li>
                 <li>icon | asparagus</li>
-                <li>icon | cherries</li>
-                <li>icon | bread</li>
+                <li>icon | asparagus</li>
+                <li>icon | asparagus</li>
+                <li>icon | asparagus</li>
+                <li>icon | asparagus</li>
             </ul>
+            <div>
+                <button id="get-recipes-button" class="button">Find Your Recipes</button>
+            </div>
         </div>
 
         <div id="given-recipes" class="container">
@@ -51,10 +53,46 @@
             <ul id="recipes-list">
                 <li>xx</li>
                 <li>xx</li>
+                <li>xx</li>
+                <li>xx</li>
+                <li>xx</li>
+                <li>xx</li>
             </ul>
+            <div>
+                <button id="given-back-button" class="button">Go Back</button>
+            </div>
+        </div>
+
+        <div id="saved-recipes" class="container">
+            <h3>your saved recipes</h3>
+            <ul id="saved-recipes-list">
+                <li>xx</li>
+            </ul>
+            <div>
+                <button id="saved-back-button" class="button">Go Back</button>
+            </div>
+        </div>
+
+        <div id="modal-no-ingredients" class="our-modal">
+            <p>Sorry, <span class="logotype">WhatTheFridge.</span> doesn't contain that ingredient.</p>
+            <div>
+                <button id="modal-ingradients-back-button" class="button">Go Back</button>
+            </div>
+        </div>
+
+        <div id="modal-no-recipes" class="our-modal">
+            <p>Sorry, <span class="logotype">WhatTheFridge.</span> couldn't find any recipes.</p>
+            <div>
+                <button id="modal-ingradients-back-button" class="button">Go Back</button>
+            </div>
         </div>
 
       </section>
+
+      <footer>
+        <span class="logotype">WhatTheFridge.</span>
+        <p>A Collaboration By: William Liao & Taylor Moss & Mubashera Mashraka & Jessica Dittrich</p>
+      </footer>
     
     <script src="assets/js/script.js"></script>
 </body>
