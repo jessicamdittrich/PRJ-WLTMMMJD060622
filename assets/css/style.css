@@ -193,6 +193,19 @@ body {
     border-radius: 7px;
 }
 
+#given-recipes ul li a, #saved-recipes ul li a{
+    color: var(--offwhite);
+    text-decoration: none;
+}
+
+#given-recipes ul li a:hover, #saved-recipes ul li a:hover{
+    color: var(--red);
+}
+
+#given-recipes ul li img, #saved-recipes ul li img {
+    max-width: 150px;
+}
+
 #given-recipes div, #saved-recipes div {
     text-align: right;
 }
