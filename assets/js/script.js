@@ -14,9 +14,12 @@ $("document").ready(function() {
 	var recipeList = []
 	var ingredientData = []
 	var imageList = []
+	var ingredientsChosen = []
+	var recipeURL = []
 	
 	// Initializing the search button
-	$(".button").click(search)
+	$("#search-button").click(search)
+
 	
 	// Initializing search function that retrieves ingredient data and fetches the recipe API
 	function search(event) {
@@ -24,7 +27,9 @@ $("document").ready(function() {
 		ingredient = $(".input").val()
 		// simply replacing the space in the search with %20 to be placed into the URL
 		ingredient = ingredient.replace(" ", "%2C%20")
-		searchURL = "https://yummly2.p.rapidapi.com/feeds/search?start=0&maxResult=18&q=" + ingredient
+		ingredientsChosen.push(ingredient);
+		searchURL = "https://yummly2.p.rapidapi.com/feeds/search?start=0&maxResult=18&q=" + ingredientsChosen
+		console.log(searchURL)
 		fetch(searchURL, options)
 			.then(function(response) {
 				return response.json()
@@ -41,18 +46,46 @@ $("document").ready(function() {
 				console.log(recipeList)
 				// stores the WHOLE data of every ingredient in each recipe
 				ingredientData = []
-				for (var j = 0; j < recipeData.length; j++) {
-					ingredientData.push(recipeData[j].content.ingredientLines)
+				for (var i = 0; i < recipeData.length; i++) {
+					ingredientData.push(recipeData[i].content.ingredientLines)
 				}
 				console.log(ingredientData)
-				// stores a link to an image that represents the finsihed dish for each recipe
+				// stores a link to an image that represents the finished dish for each recipe
 				imageList = []
-				for (var k = 0; k < recipeData.length; k++) {
-					imageList.push(recipeData[k].content.details.images[0].hostedLargeUrl)
+				for (var i = 0; i < recipeData.length; i++) {
+					imageList.push(recipeData[i].content.details.images[0].hostedLargeUrl)
 				}
 				console.log(imageList)
+				recipeURL = []
+				for (var i = 0; i < recipeData.length; i++) {
+					recipeURL.push(recipeData[i].content.details.directionsUrl)
+				}
 			})
 			.catch(err => console.error(err))
+
+			ingredientList();
+	}
+
+	function ingredientList () {
+		var ingredientsUl = document.getElementById('ingredients-list');
+		var ingredientLi = document.createElement('li');
+		var removeButton = document.createElement('button');
+		removeButton.textContent = 'x';
+
+		for (var i = 0; i < ingredientsChosen.length; i++) {
+			console.log(ingredientsChosen[i]);
+			ingredientLi.innerHTML = ingredientsChosen[i];
+			ingredientsUl.appendChild(ingredientLi);
+			ingredientLi.appendChild(removeButton);
+		}
+	};
+  
+  $("#get-recipes-button").click(populateRecipeList)
+
+	function populateRecipeList() {
+		for (var i = 0; i < recipeList.length; i++) {
+			$("#recipes-list").append($("<li><a href=" + recipeURL[i] + " target='_blank'>" + recipeList[i] + "<img src = " + imageList[i] + "></a></li>"))
+		}
 	}
     
     // API key
@@ -70,3 +103,5 @@ $("document").ready(function() {
         .catch(err => console.error(err));
 })
 
+
+}); //CODE ABOVE THIS LINE
