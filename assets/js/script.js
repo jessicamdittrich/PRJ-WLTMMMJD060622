@@ -72,7 +72,7 @@ $("document").ready(function() {
 			.catch(err => console.error(err))
 	}
 
-	function ingredientList () {
+	function ingredientList() {
 		var ingredientsUl = document.getElementById('ingredients-list');
 		var ingredientLi = document.createElement('li');
 		var removeButton = document.createElement('button');
@@ -86,10 +86,14 @@ $("document").ready(function() {
 		}
 	};
 
+	function removeIngredient() {
+		
+	}
+
 	function populateRecipeList() {
 		for (var i = 0; i < recipeList.length; i++) {
-			$("#recipes-list").append($("<a href=" + recipeURL[i] + " target='_blank'><li><button class = \"fav-button\">❤</button><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></li></a>"))
+			$("#recipes-list").append($("<li><a href=" + recipeURL[i] + " target='_blank'><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></a><button class= \"fav-button\">Add to saved</button></li>"))
 		}
-	}
+	};
 
 }); //CODE ABOVE THIS LINE
