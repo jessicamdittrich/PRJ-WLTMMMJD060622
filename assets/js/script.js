@@ -72,24 +72,56 @@ $("document").ready(function() {
 			.catch(err => console.error(err))
 	}
 
-	function ingredientList () {
+	// ADDING INGREDIENTS TO "YOUR INGREDIENTS CHOSEN"
+	function ingredientList() {
 		var ingredientsUl = document.getElementById('ingredients-list');
 		var ingredientLi = document.createElement('li');
 		var removeButton = document.createElement('button');
 		removeButton.textContent = 'x';
+		removeButton.classList.add('remove-buttons');
 
 		for (var i = 0; i < ingredientsChosen.length; i++) {
-			console.log(ingredientsChosen[i]);
 			ingredientLi.innerHTML = ingredientsChosen[i];
 			ingredientsUl.appendChild(ingredientLi);
 			ingredientLi.appendChild(removeButton);
 		}
 	};
 
+	// REMOVE BUTTON FOR INGREDIENTS
+	/*var removeButtons = Array.from(document.getElementsByClassName('remove-buttons'));
+	console.log(removeButtons);
+
+	removeButtons.forEach(btn => {
+		btn.addEventListener('click', function handleClick(event) {
+			btn.setAttribute('style', 'color: yellow;');
+		});
+	});*/
+
+	/*Array.from(removeButtons).forEach((removeButtons) => {
+		console.log(removeButtons);
+	  removeButtons.addEventListener('click', () => {
+		this.parentElement.remove();
+		console.log(this);
+		console.log(removeButtons);
+	  });
+	});*/
+
+	/*function removeIngredient() {
+		var xButtons = document.getElementsByClassName('x-buttons');
+
+		console.log(xButtons);
+		for (var i = 0; i < xButtons.length; i++) {
+			xButtons[i].addEventListener('click', function() {
+				this.target.parentNode.remove();
+				console.log(xButtons[0]);
+			});
+		}
+	};*/
+
 	function populateRecipeList() {
 		for (var i = 0; i < recipeList.length; i++) {
-			$("#recipes-list").append($("<a href=" + recipeURL[i] + " target='_blank'><li><button class = \"fav-button\">❤</button><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></li></a>"))
+			$("#recipes-list").append($("<li><a href=" + recipeURL[i] + " target='_blank'><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></a><button class= \"fav-button\">Add to saved</button></li>"))
 		}
-	}
+	};
 
 }); //CODE ABOVE THIS LINE
