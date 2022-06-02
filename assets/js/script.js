@@ -93,17 +93,16 @@ $("document").ready(function() {
 
 	// initializing a function to remove an ingredient from the ingredient list element and the ingredientChosen array
 	// also setting an event listener to the remove buttons
-	$("#ingredients-list").delegate($("#remove-button"), "click", remove)
-	function remove () {
-		var child = document.getElementById("remove-button")
-		var removeThis = child.parentElement.textContent
+	$("#ingredients-list").delegate($("#remove-button"), "click", function(event) {
+		var target = event.target
+		var removeThis = target.parentElement.textContent
 		removeThis = removeThis.replace("❌", "")
 		var index = ingredientsChosen.indexOf(removeThis)
   		if (index > -1) {
     	ingredientsChosen.splice(index, 1);
   		}
-		child.parentElement.remove()
-	}
+		target.parentElement.remove()
+	})
 
 	function populateRecipeList() {
 		for (var i = 0; i < recipeList.length; i++) {
