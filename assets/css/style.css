@@ -138,6 +138,23 @@ body {
     border-radius: 5px;
 }
 
+#chosen-ingredients ul li button {
+    margin-left: 5px;
+    padding: 1px 2px 2px 2px;
+    height: 100%;
+    width: 25px;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: var(--offwhite);
+    background-color: var(--red);
+    border: 1px solid var(--red);
+    border-radius: 5px;
+}
+
+#chosen-ingredients ul li button:hover {
+    background-color: var(--dkgrey);
+}
+
 #chosen-ingredients div {
     text-align: right;
 }
@@ -179,6 +196,7 @@ body {
 #given-recipes ul, #saved-recipes ul {
     padding: 0;
     text-align: justify;
+    vertical-align: top;
 }
 
 #given-recipes ul li, #saved-recipes ul li {
@@ -187,6 +205,8 @@ body {
     padding: 25px;
     width: 200px;
     height: 250px;
+    font-size: 25px;
+    font-weight: bold;
     text-align: center;
     color: var(--offwhite);
     background-color: var(--dkgrey);
