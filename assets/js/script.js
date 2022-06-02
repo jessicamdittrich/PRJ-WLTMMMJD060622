@@ -16,17 +16,20 @@ $("document").ready(function() {
 	var imageList = []
 	var ingredientsChosen = []
 	var recipeURL = []
+
 	
 	$("#add-button").click(add)
 	// Initializing a function that takes the user inputs and add them to an array of ingredients to be searched
 	function add(event) {
 		event.preventDefault()
 		ingredient = $(".input").val()
-		// simply replacing the space in the search with %20 to be placed into the URL
+		// simply replacing the space in the search with %2C%20 to be placed into the URL
 		ingredient = ingredient.replace(" ", "%2C%20")
-		ingredientsChosen.push(ingredient);
-		console.log(ingredientsChosen)
-		ingredientList();
+		// makes sure there is no repeating ingredient in the search
+		if (ingredientsChosen.includes(ingredient) == false) {
+			ingredientsChosen.push(ingredient);
+			ingredientList()
+		}
 	}
 	
 	// Initializing the search button
@@ -84,39 +87,15 @@ $("document").ready(function() {
 			ingredientLi.innerHTML = ingredientsChosen[i];
 			ingredientsUl.appendChild(ingredientLi);
 			ingredientLi.appendChild(removeButton);
+			removeButton.setAttribute("id", "remove-button")
 		}
 	};
 
-	// REMOVE BUTTON FOR INGREDIENTS
-	/*var removeButtons = Array.from(document.getElementsByClassName('remove-buttons'));
-	console.log(removeButtons);
+	$("#ingredients-list").delegate("button", "click", remove)
+	function remove () {
+		console.log("yo")
+	}
 
-	removeButtons.forEach(btn => {
-		btn.addEventListener('click', function handleClick(event) {
-			btn.setAttribute('style', 'color: yellow;');
-		});
-	});*/
-
-	/*Array.from(removeButtons).forEach((removeButtons) => {
-		console.log(removeButtons);
-	  removeButtons.addEventListener('click', () => {
-		this.parentElement.remove();
-		console.log(this);
-		console.log(removeButtons);
-	  });
-	});*/
-
-	/*function removeIngredient() {
-		var xButtons = document.getElementsByClassName('x-buttons');
-
-		console.log(xButtons);
-		for (var i = 0; i < xButtons.length; i++) {
-			xButtons[i].addEventListener('click', function() {
-				this.target.parentNode.remove();
-				console.log(xButtons[0]);
-			});
-		}
-	};*/
 
 	function populateRecipeList() {
 		for (var i = 0; i < recipeList.length; i++) {
