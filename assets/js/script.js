@@ -100,12 +100,14 @@ $("document").ready(function() {
             Authorization: 'Bearer X0vjEUN6KRlxbp2DoUkyHeM0VOmxY91rA6BbU5j3Xu6wDodwS0McmilLPBWDUcJ1'
         }
     };
-      
-    fetch('https://api.iconfinder.com/v4/iconsets?count=10', icons)
-        .then(response => response.json())
-        .then(response => console.log(response))
-        .catch(err => console.error(err));
-})
-
+    
+	// Initializing a function that 
+	function icon(event) {
+	    fetch('https://api.iconfinder.com/v4/iconsets?count=10', icons)
+    	    .then(response => response.json())
+        	.then(response => console.log(response))
+        	.catch(err => console.error(err));
+	}
+	
 
 }); //CODE ABOVE THIS LINE
