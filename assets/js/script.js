@@ -72,23 +72,51 @@ $("document").ready(function() {
 			.catch(err => console.error(err))
 	}
 
+	// ADDING INGREDIENTS TO "YOUR INGREDIENTS CHOSEN"
 	function ingredientList() {
 		var ingredientsUl = document.getElementById('ingredients-list');
 		var ingredientLi = document.createElement('li');
 		var removeButton = document.createElement('button');
 		removeButton.textContent = 'x';
+		removeButton.classList.add('remove-buttons');
 
 		for (var i = 0; i < ingredientsChosen.length; i++) {
-			console.log(ingredientsChosen[i]);
 			ingredientLi.innerHTML = ingredientsChosen[i];
 			ingredientsUl.appendChild(ingredientLi);
 			ingredientLi.appendChild(removeButton);
 		}
 	};
 
-	function removeIngredient() {
-		
-	}
+	// REMOVE BUTTON FOR INGREDIENTS
+	/*var removeButtons = Array.from(document.getElementsByClassName('remove-buttons'));
+	console.log(removeButtons);
+
+	removeButtons.forEach(btn => {
+		btn.addEventListener('click', function handleClick(event) {
+			btn.setAttribute('style', 'color: yellow;');
+		});
+	});*/
+
+	/*Array.from(removeButtons).forEach((removeButtons) => {
+		console.log(removeButtons);
+	  removeButtons.addEventListener('click', () => {
+		this.parentElement.remove();
+		console.log(this);
+		console.log(removeButtons);
+	  });
+	});*/
+
+	/*function removeIngredient() {
+		var xButtons = document.getElementsByClassName('x-buttons');
+
+		console.log(xButtons);
+		for (var i = 0; i < xButtons.length; i++) {
+			xButtons[i].addEventListener('click', function() {
+				this.target.parentNode.remove();
+				console.log(xButtons[0]);
+			});
+		}
+	};*/
 
 	function populateRecipeList() {
 		for (var i = 0; i < recipeList.length; i++) {

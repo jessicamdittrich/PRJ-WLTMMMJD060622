@@ -149,6 +149,7 @@ body {
     background-color: var(--red);
     border: 1px solid var(--red);
     border-radius: 5px;
+    cursor: pointer;
 }
 
 #chosen-ingredients ul li button:hover {
