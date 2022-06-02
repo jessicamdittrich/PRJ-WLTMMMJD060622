@@ -115,6 +115,7 @@ body {
     border: 2px solid var(--dkgrey);
     border-radius: 10px;
     box-shadow: 10px 10px var(--red);
+    display: none;
 }
 
 #chosen-ingredients h3 {
@@ -130,7 +131,7 @@ body {
 #chosen-ingredients ul li{
     display: inline-block;
     margin: 10px 20px 10px 10px;
-    padding: 10px;
+    padding: 15px;
     width: fit-content;
     color: var(--offwhite);
     background-color: var(--dkgrey);
@@ -139,7 +140,7 @@ body {
 }
 
 #chosen-ingredients ul li button {
-    margin-left: 5px;
+    margin-left: 10px;
     padding: 1px 2px 2px 2px;
     height: 100%;
     width: 25px;
@@ -149,10 +150,13 @@ body {
     background-color: var(--red);
     border: 1px solid var(--red);
     border-radius: 5px;
+    cursor: pointer;
 }
 
 #chosen-ingredients ul li button:hover {
-    background-color: var(--dkgrey);
+    color: var(--dkgrey);
+    background-color: var(--offwhite);
+    border-color: var(--offwhite);
 }
 
 #chosen-ingredients div {
@@ -186,6 +190,7 @@ body {
     border: 2px solid var(--dkgrey);
     border-radius: 10px;
     box-shadow: 10px 10px var(--red);
+    display: none;
 }
 
 #given-recipes h3, #saved-recipes h3 {
@@ -195,7 +200,7 @@ body {
 
 #given-recipes ul, #saved-recipes ul {
     padding: 0;
-    text-align: justify;
+    text-align: center;
     vertical-align: top;
 }
 
@@ -203,27 +208,53 @@ body {
     display: inline-block;
     margin: 25px;
     padding: 25px;
-    width: 200px;
-    height: 250px;
-    font-size: 25px;
-    font-weight: bold;
+    width: 28.5%;
+    height: fit-content;
     text-align: center;
     color: var(--offwhite);
     background-color: var(--dkgrey);
     border-radius: 7px;
 }
 
-#given-recipes ul li a, #saved-recipes ul li a{
+#given-recipes ul li a, #saved-recipes ul li a {
     color: var(--offwhite);
     text-decoration: none;
 }
 
-#given-recipes ul li a:hover, #saved-recipes ul li a:hover{
-    color: var(--red);
+#given-recipes ul li p, #saved-recipes ul li p {
+    height: 60px;
+    font-size: 24px;
+    font-weight: bolder;
+    line-height: 28px;
+    overflow: hidden;
 }
 
 #given-recipes ul li img, #saved-recipes ul li img {
-    max-width: 150px;
+    margin: 10px 0;
+    width: 100%;
+    border-radius: 5px;
+}
+
+#given-recipes ul li button, #saved-recipes ul li button {
+    height: 50px;
+    width: 100%;
+    padding: 5px;
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--offwhite);
+    background-color: var(--red);
+    border: 1px solid var(--red);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#given-recipes ul li button:hover, #saved-recipes ul li button:hover {
+    color: var(--dkgrey);
+    background-color: var(--offwhite);
+    border-color: var(--offwhite);
 }
 
 #given-recipes div, #saved-recipes div {
@@ -299,6 +330,9 @@ body {
 /* ***** FOOTER ***** */
 
 footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
     text-align: center;
     padding: 15px;
     background-color: var(--dkgrey);
@@ -317,6 +351,12 @@ footer p {
 }
 
 /* MEDIA QUERIES */
+    /* QUICK FIX */
+    @media screen and (max-width: 1215px) {
+        #given-recipes ul li, #saved-recipes ul li {
+            width: 44.25%;
+        }
+    }
 
     /* TABLETS */
     @media screen and (max-width: 992px) {
@@ -370,9 +410,9 @@ footer p {
         
         #given-recipes ul li, #saved-recipes ul li {
             display: inline-block;
-            margin: 5px 0 10px 0;
-            width: 49%;
-            /*height: 250px;*/
+            margin: 5px 5px 10px 5px;
+            width: 48.5%;
+            height: fit-content;
         }
 
         #given-recipes div button, #saved-recipes div button {
@@ -411,6 +451,10 @@ footer p {
             width: 100%;
             /*height: 250px;*/
         } 
+
+        #given-recipes ul li img, #saved-recipes ul li img {
+            max-width: 100%;
+        }
     }
 
     /* SMALL SMARTPHONES */

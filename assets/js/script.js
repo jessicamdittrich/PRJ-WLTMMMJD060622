@@ -16,17 +16,20 @@ $("document").ready(function() {
 	var imageList = []
 	var ingredientsChosen = []
 	var recipeURL = []
+
 	
 	$("#add-button").click(add)
 	// Initializing a function that takes the user inputs and add them to an array of ingredients to be searched
 	function add(event) {
 		event.preventDefault()
 		ingredient = $(".input").val()
-		// simply replacing the space in the search with %20 to be placed into the URL
+		// simply replacing the space in the search with %2C%20 to be placed into the URL
 		ingredient = ingredient.replace(" ", "%2C%20")
-		ingredientsChosen.push(ingredient);
-		console.log(ingredientsChosen)
-		ingredientList();
+		// makes sure there is no repeating ingredient in the search
+		if (ingredientsChosen.includes(ingredient) == false) {
+			ingredientsChosen.push(ingredient);
+			ingredientList()
+		}
 	}
 	
 	// Initializing the search button
@@ -72,42 +75,32 @@ $("document").ready(function() {
 			.catch(err => console.error(err))
 	}
 
-	function ingredientList () {
+	// ADDING INGREDIENTS TO "YOUR INGREDIENTS CHOSEN"
+	function ingredientList() {
 		var ingredientsUl = document.getElementById('ingredients-list');
 		var ingredientLi = document.createElement('li');
 		var removeButton = document.createElement('button');
 		removeButton.textContent = 'x';
+		removeButton.classList.add('remove-buttons');
 
 		for (var i = 0; i < ingredientsChosen.length; i++) {
-			console.log(ingredientsChosen[i]);
 			ingredientLi.innerHTML = ingredientsChosen[i];
 			ingredientsUl.appendChild(ingredientLi);
 			ingredientLi.appendChild(removeButton);
+			removeButton.setAttribute("id", "remove-button")
 		}
 	};
 
+	$("#ingredients-list").delegate("button", "click", remove)
+	function remove () {
+		console.log("yo")
+	}
+
+
 	function populateRecipeList() {
 		for (var i = 0; i < recipeList.length; i++) {
-			$("#recipes-list").append($("<a href=" + recipeURL[i] + " target='_blank'><li><button class = \"fav-button\">❤</button><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></li></a>"))
+			$("#recipes-list").append($("<li><a href=" + recipeURL[i] + " target='_blank'><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></a><button class= \"fav-button\">Add to saved</button></li>"))
 		}
-	}
-    
-    // API key
-    const icons = {
-        method: 'GET',
-        headers: {
-            Accept: 'application/json',
-            Authorization: 'Bearer X0vjEUN6KRlxbp2DoUkyHeM0VOmxY91rA6BbU5j3Xu6wDodwS0McmilLPBWDUcJ1'
-        }
-    };
-    
-	// Initializing a function that 
-	function icon(event) {
-	    fetch('https://api.iconfinder.com/v4/iconsets?count=10', icons)
-    	    .then(response => response.json())
-        	.then(response => console.log(response))
-        	.catch(err => console.error(err));
-	}
-	
+	};
 
 }); //CODE ABOVE THIS LINE
