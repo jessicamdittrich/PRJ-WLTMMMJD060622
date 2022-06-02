@@ -16,6 +16,12 @@ $("document").ready(function() {
 	var imageList = []
 	var ingredientsChosen = []
 	var recipeURL = []
+	var savedRecipes = []
+	// retrieves saved recipes from localStorage on load
+	if (JSON.parse(localStorage.getItem("Saved")) === null) {
+	} else {
+		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))]
+	}
 
 	
 	$("#add-button").click(add)
@@ -97,7 +103,8 @@ $("document").ready(function() {
 
 	// initializing a function to remove an ingredient from the ingredient list element and the ingredientChosen array
 	// also setting an event listener to the remove buttons
-	$("#ingredients-list").delegate($("#remove-button"), "click", function(event) {
+
+	$("#ingredients-list").on("click", "#remove-button", function(event) {
 		var target = event.target
 		var removeThis = target.parentElement.textContent
 		removeThis = removeThis.replace("❌", "")
@@ -122,16 +129,16 @@ $("document").ready(function() {
 
 
 
-	// 
-	$("#recipes-list").delegate($(".fav-button"), "click", function(event) {
+	// Initializing function to retrieve relevant data to save a recipe to localStorage
+	$("#recipes-list").on("click", ".fav-button", save)
+	function save(event) {
 		console.log("yo")
-		// var target = event.target
-		// var recipeName = $(target).siblings.innerText
-		// console.log(recipeName)
-		var index = recipeList.indexOf("Butter Chicken")
-		console.log(recipeList[index])
-		console.log(imageList[index])
-		console.log(recipeURL[index])
-	})
+		var target = event.target
+		console.log(target)
+		var recipeName = $(target).siblings().children(":first")[0].innerText
+		var index = recipeList.indexOf(recipeName)
+		savedRecipes.unshift({name: recipeList[index], link: recipeURL[index], image: imageList[index]})
+		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
+	}
 
 }); //CODE ABOVE THIS LINE
