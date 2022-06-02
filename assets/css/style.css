@@ -115,6 +115,7 @@ body {
     border: 2px solid var(--dkgrey);
     border-radius: 10px;
     box-shadow: 10px 10px var(--red);
+    display: none;
 }
 
 #chosen-ingredients h3 {
@@ -189,6 +190,7 @@ body {
     border: 2px solid var(--dkgrey);
     border-radius: 10px;
     box-shadow: 10px 10px var(--red);
+    display: none;
 }
 
 #given-recipes h3, #saved-recipes h3 {
@@ -328,6 +330,9 @@ body {
 /* ***** FOOTER ***** */
 
 footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
     text-align: center;
     padding: 15px;
     background-color: var(--dkgrey);
