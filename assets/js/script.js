@@ -73,6 +73,7 @@ $("document").ready(function() {
 			})
 			.then(populateRecipeList)
 			.catch(err => console.error(err))
+			$("#given-recipes").css("display", "block")
 	}
 
 	// ADDING INGREDIENTS TO "YOUR INGREDIENTS CHOSEN"
@@ -80,8 +81,7 @@ $("document").ready(function() {
 		var ingredientsUl = document.getElementById('ingredients-list');
 		var ingredientLi = document.createElement('li');
 		var removeButton = document.createElement('button');
-		removeButton.textContent = 'x';
-		removeButton.classList.add('remove-buttons');
+		removeButton.textContent = '❌';
 
 		for (var i = 0; i < ingredientsChosen.length; i++) {
 			ingredientLi.innerHTML = ingredientsChosen[i];
@@ -91,16 +91,24 @@ $("document").ready(function() {
 		}
 	};
 
-	$("#ingredients-list").delegate("button", "click", remove)
+	// initializing a function to remove an ingredient from the ingredient list element and the ingredientChosen array
+	// also setting an event listener to the remove buttons
+	$("#ingredients-list").delegate($("#remove-button"), "click", remove)
 	function remove () {
-		console.log("yo")
+		var child = document.getElementById("remove-button")
+		var removeThis = child.parentElement.textContent
+		removeThis = removeThis.replace("❌", "")
+		var index = ingredientsChosen.indexOf(removeThis)
+  		if (index > -1) {
+    	ingredientsChosen.splice(index, 1);
+  		}
+		child.parentElement.remove()
 	}
-
 
 	function populateRecipeList() {
 		for (var i = 0; i < recipeList.length; i++) {
 			$("#recipes-list").append($("<li><a href=" + recipeURL[i] + " target='_blank'><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></a><button class= \"fav-button\">Add to saved</button></li>"))
 		}
-	};
+	}
 
 }); //CODE ABOVE THIS LINE
