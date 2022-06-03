@@ -114,7 +114,7 @@ html, body {
 #quotes {
     min-height: 250px;
     margin-top: 25px;
-    padding: 25px;
+    padding: 75px 25px 25px 25px;
     text-align: center;
     border: 2px solid var(--dkgrey);
     border-radius: 10px;
@@ -123,14 +123,28 @@ html, body {
 
 #quotes .quotations {
     display: inline;
-    font-family:Georgia, 'Times New Roman', Times, serif;
-    font-size: 100px;
+    margin: 0 10px;
+    font-family: 'Orelega One', cursive;
+    font-size: 80px;
+    line-height: 20px;
+    color: var(--red);
 }
 
 #quotes p {
     display: inline;
     font-family: 'Orelega One', cursive;
-    font-size: 80px;
+    font-size: 40px;
+    line-height: 60px;
+}
+
+#quotes #quote-author {
+    display: block;
+    font-family: var(--font);
+    font-size: 20px;
+    font-weight: bolder;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--red);
 }
 
 /* ***** CHOSEN INGREDIENTS SECTION W/ EMPTY LIST ***** */
