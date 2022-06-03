@@ -210,9 +210,9 @@ html, body {
     border-color: var(--offwhite);
 }
 
-/* ***** RECIPES SECTION & SAVED RECIPES W/ EMPTY LIST ***** */
+/* ***** RECIPES SECTION W/ EMPTY LIST ***** */
 
-#given-recipes, #saved-recipes {
+#given-recipes {
     min-height: 250px;
     margin-top: 25px;
     padding: 25px;
@@ -223,18 +223,18 @@ html, body {
     display: none;
 }
 
-#given-recipes h3, #saved-recipes h3 {
+#given-recipes h3 {
     font-family: 'Orelega One', cursive;
     font-size: 40px;
 }
 
-#given-recipes ul, #saved-recipes ul {
+#given-recipes ul {
     padding: 0;
     text-align: center;
     vertical-align: top;
 }
 
-#given-recipes ul li, #saved-recipes ul li {
+#given-recipes ul li {
     display: inline-block;
     margin: 25px;
     padding: 25px;
@@ -246,12 +246,12 @@ html, body {
     border-radius: 7px;
 }
 
-#given-recipes ul li a, #saved-recipes ul li a {
+#given-recipes ul li a {
     color: var(--offwhite);
     text-decoration: none;
 }
 
-#given-recipes ul li p, #saved-recipes ul li p {
+#given-recipes ul li p {
     height: 60px;
     font-size: 24px;
     font-weight: bolder;
@@ -259,13 +259,13 @@ html, body {
     overflow: hidden;
 }
 
-#given-recipes ul li img, #saved-recipes ul li img {
+#given-recipes ul li img {
     margin: 10px 0;
     width: 100%;
     border-radius: 5px;
 }
 
-#given-recipes ul li button, #saved-recipes ul li button {
+#given-recipes ul li button {
     height: 50px;
     width: 100%;
     padding: 5px;
@@ -281,17 +281,17 @@ html, body {
     cursor: pointer;
 }
 
-#given-recipes ul li button:hover, #saved-recipes ul li button:hover {
+#given-recipes ul li button:hover {
     color: var(--dkgrey);
     background-color: var(--offwhite);
     border-color: var(--offwhite);
 }
 
-#given-recipes div, #saved-recipes div {
+#given-recipes div {
     text-align: right;
 }
 
-#given-recipes div button, #saved-recipes div button {
+#given-recipes div button {
     height: 50px;
     font-family: var(--font);
     font-size: 16px;
@@ -304,7 +304,7 @@ html, body {
     border-radius: 5px;
 }
 
-#given-recipes div button:hover, #saved-recipes div button:hover {
+#given-recipes div button:hover {
     color: var(--offwhite);
     background-color: var(--dkgrey);
     border-color: var(--offwhite);
@@ -367,6 +367,114 @@ html, body {
 
 #modal-no-recipes {
     display: none;
+}
+
+/* ***** SAVED RECIPES MODAL ***** */
+
+#saved-recipes {
+    height: 70%;
+    width: 70%;
+    top: 15%;
+    left: 15%;
+    overflow-y: scroll;
+    z-index: 501;
+}
+
+#saved-recipes h3 {
+    font-family: 'Orelega One', cursive;
+    font-size: 40px;
+}
+
+#saved-recipes ul {
+    padding: 0;
+    text-align: center;
+    vertical-align: top;
+}
+
+#saved-recipes #nothing-saved-text {
+    display: block;
+    margin: 175px auto;
+    font-size: 20px;
+}
+
+#saved-recipes ul li {
+    display: inline-block;
+    margin: 25px;
+    padding: 25px;
+    width: 25%;
+    height: fit-content;
+    text-align: center;
+    color: var(--offwhite);
+    background-color: var(--red);
+    border-radius: 7px;
+}
+
+/*#saved-recipes li:last-child {
+    text-align: left;
+} need to play around with this - everything is centered even if only 1*/
+
+#saved-recipes ul li a {
+    color: var(--offwhite);
+    text-decoration: none;
+}
+
+#saved-recipes ul li p {
+    height: 60px;
+    font-size: 24px;
+    font-weight: bolder;
+    line-height: 28px;
+    overflow: hidden;
+}
+
+#saved-recipes ul li img {
+    margin: 10px 0;
+    width: 100%;
+    border-radius: 5px;
+}
+
+#saved-recipes ul li button {
+    height: 50px;
+    width: 100%;
+    padding: 5px;
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--offwhite);
+    background-color: var(--red);
+    border: 1px solid var(--red);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#saved-recipes div {
+    text-align: right;
+}
+
+#saved-recipes div button {
+    height: 50px;
+    font-family: var(--font);
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--offwhite);
+    background-color: var(--red);
+    border: 2px solid var(--red);
+    border-radius: 5px;
+}
+
+#saved-recipes ul li button:hover {
+    color: var(--dkgrey);
+    background-color: var(--offwhite);
+    border-color: var(--offwhite);
+}
+
+#saved-recipes div button:hover {
+    color: var(--offwhite);
+    background-color: var(--dkgrey);
+    border-color: var(--offwhite);
 }
 
 /* ***** FOOTER ***** */
