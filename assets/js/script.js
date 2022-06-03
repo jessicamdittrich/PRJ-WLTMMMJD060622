@@ -122,12 +122,21 @@ $("document").ready(function() {
 		}
 	}
 
+
 	// DISPLAYING ADDED INGREDIENTS WHEN BUTTON IS PRESSED
 	$("#add-button").click(function() {
 		$("#chosen-ingredients").css("display", "block")
 	})
 
+	// Remove recipe list when GO BACK button is pressed
+	$("#given-back-button").click(function() {
+		$("#given-recipes").css("display", "none")
+	})
 
+	// Remove recipe list when ADD button is pressed
+	$("#add-button").click(function() {
+		$("#given-recipes").css("display", "none")
+	})
 
 	// Initializing function to retrieve relevant data to save a recipe to localStorage
 	$("#recipes-list").on("click", ".fav-button", save)
