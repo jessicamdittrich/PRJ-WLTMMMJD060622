@@ -141,13 +141,28 @@ $("document").ready(function() {
 	// Initializing function to retrieve relevant data to save a recipe to localStorage
 	$("#recipes-list").on("click", ".fav-button", save)
 	function save(event) {
-		console.log("yo")
 		var target = event.target
-		console.log(target)
 		var recipeName = $(target).siblings().children(":first")[0].innerText
 		var index = recipeList.indexOf(recipeName)
 		savedRecipes.unshift({name: recipeList[index], link: recipeURL[index], image: imageList[index]})
 		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
+	}
+
+	// Initializing function to retrieve localStorage and put it into the saved recipes div
+	$("#saved-button").click(getSaved)
+	function getSaved(event) {
+		event.preventDefault()
+		console.log("yo")
+		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))]
+		console.log(savedRecipes)
+		$("#saved-recipes-modal").css("display", "inline")
+		if (savedRecipes) {
+			for (var i = 0; i <savedRecipes.length; i++) {
+				$("#saved-recipes-list").append($("<li><a href=" + savedRecipes[0][i].link + " target='_blank'><p>" + savedRecipes[0][i].name + "</p><img src = " + savedRecipes[0][i].image + "></a></li>"))
+			}
+		} else {
+			$("#saved-recipes-list").append($("<li><span id=\"nothing-saved-text\">You have nothing saved yet</span></li>"))
+		}
 	}
 
 }); //CODE ABOVE THIS LINE
