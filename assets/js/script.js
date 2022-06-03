@@ -16,6 +16,12 @@ $("document").ready(function() {
 	var imageList = []
 	var ingredientsChosen = []
 	var recipeURL = []
+	var savedRecipes = []
+	// retrieves saved recipes from localStorage on load
+	if (JSON.parse(localStorage.getItem("Saved")) === null) {
+	} else {
+		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))]
+	}
 
 	
 	$("#add-button").click(add)
@@ -38,6 +44,10 @@ $("document").ready(function() {
 	// Initializing search function that retrieves ingredient data and fetches the recipe API
 	function search(event) {
 		event.preventDefault()
+		// makes the chosen ingredients div disappear
+		$("#chosen-ingredients").css("display", "none")
+		// clears the recipe section of any existing recipes
+		$("#recipes-list").children().remove()
 		searchURL = "https://yummly2.p.rapidapi.com/feeds/search?start=0&maxResult=18&q=" + ingredientsChosen
 		console.log(searchURL)
 		fetch(searchURL, options)
@@ -81,10 +91,10 @@ $("document").ready(function() {
 		var ingredientsUl = document.getElementById('ingredients-list');
 		var ingredientLi = document.createElement('li');
 		var removeButton = document.createElement('button');
-		removeButton.textContent = '❌';
+		removeButton.textContent = '✖';
+		ingredientLi.innerHTML = $(".input").val()
 
 		for (var i = 0; i < ingredientsChosen.length; i++) {
-			ingredientLi.innerHTML = ingredientsChosen[i];
 			ingredientsUl.appendChild(ingredientLi);
 			ingredientLi.appendChild(removeButton);
 			removeButton.setAttribute("id", "remove-button")
@@ -93,13 +103,15 @@ $("document").ready(function() {
 
 	// initializing a function to remove an ingredient from the ingredient list element and the ingredientChosen array
 	// also setting an event listener to the remove buttons
-	$("#ingredients-list").delegate($("#remove-button"), "click", function(event) {
+
+	$("#ingredients-list").on("click", "#remove-button", function(event) {
 		var target = event.target
 		var removeThis = target.parentElement.textContent
-		removeThis = removeThis.replace("❌", "")
+		removeThis = removeThis.replace("✖", "")
+		removeThis = removeThis.replace(" ", "%2C%20")
 		var index = ingredientsChosen.indexOf(removeThis)
   		if (index > -1) {
-    	ingredientsChosen.splice(index, 1);
+    		ingredientsChosen.splice(index, 1);
   		}
 		target.parentElement.remove()
 	})
@@ -120,5 +132,18 @@ $("document").ready(function() {
 	$("#search-button").click(function() {
 		$("#given-recipes").css("display", "block")
 	})
+
+
+	// Initializing function to retrieve relevant data to save a recipe to localStorage
+	$("#recipes-list").on("click", ".fav-button", save)
+	function save(event) {
+		console.log("yo")
+		var target = event.target
+		console.log(target)
+		var recipeName = $(target).siblings().children(":first")[0].innerText
+		var index = recipeList.indexOf(recipeName)
+		savedRecipes.unshift({name: recipeList[index], link: recipeURL[index], image: imageList[index]})
+		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
+	}
 
 }); //CODE ABOVE THIS LINE
