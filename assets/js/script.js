@@ -131,6 +131,7 @@ $("document").ready(function() {
 	// Remove recipe list when GO BACK button is pressed
 	$("#given-back-button").click(function() {
 		$("#given-recipes").css("display", "none")
+		$("#chosen-ingredients").css("display", "block")
 	})
 
 	// Remove recipe list when ADD button is pressed
@@ -156,13 +157,12 @@ $("document").ready(function() {
 		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))]
 		console.log(savedRecipes)
 		$("#saved-recipes-modal").css("display", "inline")
-		if (savedRecipes) {
-			for (var i = 0; i <savedRecipes.length; i++) {
+		if (savedRecipes[0] == null || savedRecipes[0] == undefined) {
+			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
+		} else {
+			for (var i = 0; i <savedRecipes[0].length; i++) {
 				$("#saved-recipes-list").append($("<li><a href=" + savedRecipes[0][i].link + " target='_blank'><p>" + savedRecipes[0][i].name + "</p><img src = " + savedRecipes[0][i].image + "></a></li>"))
 			}
-		} else {
-			$("#saved-recipes-list").append($("<li><span id=\"nothing-saved-text\">You have nothing saved yet</span></li>"))
 		}
 	}
-
 }); //CODE ABOVE THIS LINE
