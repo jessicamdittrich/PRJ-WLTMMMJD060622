@@ -122,7 +122,6 @@ $("document").ready(function() {
 		}
 	}
 
-
 	// DISPLAYING ADDED INGREDIENTS WHEN BUTTON IS PRESSED
 	$("#add-button").click(function() {
 		$("#chosen-ingredients").css("display", "block")
@@ -136,6 +135,21 @@ $("document").ready(function() {
 	// Remove recipe list when ADD button is pressed
 	$("#add-button").click(function() {
 		$("#given-recipes").css("display", "none")
+	})
+
+	// Remove saved recipes modal when GO BACK button is pressed
+	$("#saved-back-button").click(function() {
+		$("#saved-recipes-modal").css("display", "none")
+	})
+
+	// Remove no ingredients modal when GO BACK button is pressed
+	$("#modal-ingradients-back-button").click(function() {
+		$("#modal-no-ingredients").css("display", "none")
+	})
+
+	// Remove no recipes modal when GO BACK button is pressed
+	$("#modal-recipes-back-button").click(function() {
+		$("#modal-no-recipes").css("display", "none")
 	})
 
 	// Initializing function to retrieve relevant data to save a recipe to localStorage
@@ -164,5 +178,7 @@ $("document").ready(function() {
 			$("#saved-recipes-list").append($("<li><span id=\"nothing-saved-text\">You have nothing saved yet</span></li>"))
 		}
 	}
+
+	// Change ADD TO SAVED button to ADDED
 
 }); //CODE ABOVE THIS LINE
