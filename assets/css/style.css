@@ -160,7 +160,7 @@ html, body {
     margin: 10px 20px 10px 10px;
     padding: 15px;
     width: fit-content;
-    text-transform: capitalize;
+    text-transform: uppercase;
     color: var(--offwhite);
     background-color: var(--dkgrey);
     border: 1px solid var(--dkgrey);
@@ -507,8 +507,11 @@ footer p {
 /* MEDIA QUERIES */
     /* QUICK FIX */
     @media screen and (max-width: 1215px) {
-        #given-recipes ul li, #saved-recipes ul li {
+        #given-recipes ul li {
             width: 44.25%;
+        }
+        #saved-recipes ul li {
+            width: 40%;
         }
     }
 
@@ -562,11 +565,17 @@ footer p {
             text-align: justify;
         }
         
-        #given-recipes ul li, #saved-recipes ul li {
+        #given-recipes ul li {
             display: inline-block;
             margin: 5px 5px 10px 5px;
             width: 48.5%;
             height: fit-content;
+        }
+
+        #saved-recipes ul li {
+            margin: 5px 0;
+            padding: 0;
+            width: 100%;
         }
 
         #given-recipes div button, #saved-recipes div button {
