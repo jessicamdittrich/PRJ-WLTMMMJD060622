@@ -7,7 +7,7 @@
     --offwhite: #f5f5f5;
 }
 
-body {
+html, body {
     font-family: var(--font);
     font-size: 20px;
     background-color: var(--offwhite);
@@ -70,7 +70,9 @@ body {
     height: 50px;
     padding-left: 15px;
     font-family: var(--font);
+    font-size: 16px;
     font-weight: bold;
+    text-transform: uppercase;
     color: var(--offwhite);
     background-color: var(--red);
     border: 2px solid var(--red);
@@ -94,6 +96,7 @@ body {
     border-radius: 5px;
     height: 50px;
     font-family: var(--font);
+    font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -107,9 +110,33 @@ body {
     border-color: var(--offwhite);
 }
 
+/* ***** QUOTES CONTAINER ON PAGE LOAD ***** */
+#quotes {
+    min-height: 250px;
+    margin-top: 25px;
+    padding: 25px;
+    text-align: center;
+    border: 2px solid var(--dkgrey);
+    border-radius: 10px;
+    box-shadow: 10px 10px var(--red);
+}
+
+#quotes .quotations {
+    display: inline;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size: 100px;
+}
+
+#quotes p {
+    display: inline;
+    font-family: 'Orelega One', cursive;
+    font-size: 80px;
+}
+
 /* ***** CHOSEN INGREDIENTS SECTION W/ EMPTY LIST ***** */
 
 #chosen-ingredients {
+    min-height: 250px;
     margin-top: 25px;
     padding: 25px;
     border: 2px solid var(--dkgrey);
@@ -133,6 +160,7 @@ body {
     margin: 10px 20px 10px 10px;
     padding: 15px;
     width: fit-content;
+    text-transform: capitalize;
     color: var(--offwhite);
     background-color: var(--dkgrey);
     border: 1px solid var(--dkgrey);
@@ -141,7 +169,7 @@ body {
 
 #chosen-ingredients ul li button {
     margin-left: 10px;
-    padding: 1px 2px 2px 2px;
+    padding: 2px 3px 3px 3px;
     height: 100%;
     width: 25px;
     font-size: 20px;
@@ -166,6 +194,7 @@ body {
 #chosen-ingredients div button {
     height: 50px;
     font-family: var(--font);
+    font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -184,6 +213,7 @@ body {
 /* ***** RECIPES SECTION & SAVED RECIPES W/ EMPTY LIST ***** */
 
 #given-recipes, #saved-recipes {
+    min-height: 250px;
     margin-top: 25px;
     padding: 25px;
     color: var(--dkgrey);
@@ -264,6 +294,7 @@ body {
 #given-recipes div button, #saved-recipes div button {
     height: 50px;
     font-family: var(--font);
+    font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -280,6 +311,16 @@ body {
 }
 
 /* ***** ALL MODALS ***** */
+.our-modal-container {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(245, 245, 245, .5);
+    z-index: 500;
+}
+
 .our-modal {
     position: fixed;
     width: 25%;
@@ -304,6 +345,7 @@ body {
     margin-top: 15px;
     height: 50px;
     font-family: var(--font);
+    font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -330,7 +372,7 @@ body {
 /* ***** FOOTER ***** */
 
 footer {
-    position: fixed;
+    position: relative;
     width: 100%;
     bottom: 0;
     text-align: center;

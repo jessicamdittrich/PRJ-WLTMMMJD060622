@@ -85,7 +85,7 @@ $("document").ready(function() {
 		var ingredientsUl = document.getElementById('ingredients-list');
 		var ingredientLi = document.createElement('li');
 		var removeButton = document.createElement('button');
-		removeButton.textContent = '❌';
+		removeButton.textContent = '✖';
 		ingredientLi.innerHTML = $(".input").val()
 
 		for (var i = 0; i < ingredientsChosen.length; i++) {
@@ -100,7 +100,7 @@ $("document").ready(function() {
 	$("#ingredients-list").delegate($("#remove-button"), "click", function(event) {
 		var target = event.target
 		var removeThis = target.parentElement.textContent
-		removeThis = removeThis.replace("❌", "")
+		removeThis = removeThis.replace("✖", "")
 		removeThis = removeThis.replace(" ", "%2C%20")
 		var index = ingredientsChosen.indexOf(removeThis)
   		if (index > -1) {
