@@ -371,9 +371,9 @@ html, body {
 
 /* ***** SAVED RECIPES MODAL ***** */
 
-/*#saved-recipes-modal {
+#saved-recipes-modal {
     display: none;
-}*/
+}
 
 #saved-recipes-modal #saved-recipes {
     height: 70%;
