@@ -128,11 +128,11 @@ $("document").ready(function() {
 		$("#chosen-ingredients").css("display", "block")
 	})
 
-	// DISPLAYING RECIPES WHEN SEARCH BUTTON IS PRESSED
-	$("#search-button").click(function() {
-		$("#given-recipes").css("display", "block")
+	// Remove recipe list when GO BACK button is pressed
+	$("#given-back-button").click(function() {
+		$("#given-recipes").css("display", "none")
 	})
-
+	
 
 	// Initializing function to retrieve relevant data to save a recipe to localStorage
 	$("#recipes-list").on("click", ".fav-button", save)
