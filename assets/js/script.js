@@ -23,7 +23,38 @@ $("document").ready(function() {
 		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))]
 	}
 
+		// RANDOM FOOD QUOTES
+		fetch('https://famous-quotes4.p.rapidapi.com/random?category=food&count=1', {
+			method: 'GET',
+			headers: {
+				'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com',
+				'X-RapidAPI-Key': 'bc864ba75dmsh17d4908165347bap1a2a98jsnf1350501706b'
+			}
+		})
+		.then(function (response) {
+			return response.json();
+		})
+		.then(function (data) {
+			console.log(data);
+			console.log(data[0].text);
+			console.log(data[0].author);
+
+			var quoteText = document.getElementById('quote-text');
+			var quoteAuthor = document.getElementById('quote-author');
+
+			quoteText.textContent = data[0].text;
+			quoteAuthor.textContent = data[0].author;
+		});
 	
+		// INPUTTING RANDOM FOOD QUOTES
+		/*function inputFoodQuotes() {
+			var quoteText = getElementById('quote-text');
+			var quoteAuthor = getElementById('quote-author');
+
+			quoteText.textContent(data[0].text);
+			quoteAuthor.textContent(data[0].author);
+		}*/
+
 	$("#add-button").click(add)
 	// Initializing a function that takes the user inputs and add them to an array of ingredients to be searched
 	function add(event) {
