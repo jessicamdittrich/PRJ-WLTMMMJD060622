@@ -110,16 +110,15 @@ $("document").ready(function() {
 		}
 	}
 
+
 	// DISPLAYING ADDED INGREDIENTS WHEN BUTTON IS PRESSED
 	$("#add-button").click(function() {
 		$("#chosen-ingredients").css("display", "block")
 	})
 
-
-
-	//DISPLAYING SAVED RECIPES WHEN BUTTON IS PRESSED
-	$("#saved-button").click(function() {
-		$("#saved-recipes").css("display", "inline-block")
+	// DISPLAYING RECIPES WHEN SEARCH BUTTON IS PRESSED
+	$("#search-button").click(function() {
+		$("#given-recipes").css("display", "block")
 	})
 
 }); //CODE ABOVE THIS LINE
