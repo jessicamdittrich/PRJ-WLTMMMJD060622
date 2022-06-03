@@ -117,8 +117,12 @@ $("document").ready(function() {
 	})
 
 	function populateRecipeList() {
-		for (var i = 0; i < recipeList.length; i++) {
-			$("#recipes-list").append($("<li><a href=" + recipeURL[i] + " target='_blank'><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></a><button class= \"fav-button\">Add to saved</button></li>"))
+		if (recipeList == "") {
+			$("#modal-no-recipes").css("display", "inline")
+		} else {
+			for (var i = 0; i < recipeList.length; i++) {
+				$("#recipes-list").append($("<li><a href=" + recipeURL[i] + " target='_blank'><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></a><button class= \"fav-button\">Add to saved</button></li>"))
+			}
 		}
 	}
 
@@ -153,15 +157,28 @@ $("document").ready(function() {
 	$("#saved-button").click(getSaved)
 	function getSaved(event) {
 		event.preventDefault()
-		console.log("yo")
 		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))]
-		console.log(savedRecipes)
 		$("#saved-recipes-modal").css("display", "inline")
 		if (savedRecipes[0] == null || savedRecipes[0] == undefined) {
 			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
 		} else {
 			for (var i = 0; i <savedRecipes[0].length; i++) {
-				$("#saved-recipes-list").append($("<li><a href=" + savedRecipes[0][i].link + " target='_blank'><p>" + savedRecipes[0][i].name + "</p><img src = " + savedRecipes[0][i].image + "></a></li>"))
+				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[0][i].link + " target='_blank'><p>" + savedRecipes[0][i].name + "</p><img src = " + savedRecipes[0][i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
+			}
+		}
+	}
+
+	$("#saved-recipes-modal").on("click", $(".removeSaved-button"), removeSaved)
+	function removeSaved(event) {
+		var target = event.target
+		var index = target.parentElement.id
+		savedRecipes[0].splice(index, 1)
+		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
+		if (savedRecipes[0] == null || savedRecipes[0] == undefined) {
+			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
+		} else {
+			for (var i = 0; i <savedRecipes[0].length; i++) {
+				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[0][i].link + " target='_blank'><p>" + savedRecipes[0][i].name + "</p><img src = " + savedRecipes[0][i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
 			}
 		}
 	}
