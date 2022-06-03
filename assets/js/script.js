@@ -4,7 +4,7 @@ $("document").ready(function() {
 		method: 'GET',
 		headers: {
 			'X-RapidAPI-Host': 'yummly2.p.rapidapi.com',
-			'X-RapidAPI-Key': '67eb59ab29msh40e600ec911fcb1p1f829fjsn39cb0c4650f1'
+    		'X-RapidAPI-Key': 'bc864ba75dmsh17d4908165347bap1a2a98jsnf1350501706b'
 		}
 	};
 	
@@ -24,27 +24,29 @@ $("document").ready(function() {
 	}
 
 		// RANDOM FOOD QUOTES
-		fetch('https://famous-quotes4.p.rapidapi.com/random?category=food&count=1', {
-			method: 'GET',
-			headers: {
-				'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com',
-				'X-RapidAPI-Key': 'bc864ba75dmsh17d4908165347bap1a2a98jsnf1350501706b'
-			}
-		})
-		.then(function (response) {
-			return response.json();
-		})
-		.then(function (data) {
-			console.log(data);
-			console.log(data[0].text);
-			console.log(data[0].author);
+		// fetch('https://famous-quotes4.p.rapidapi.com/random?category=food&count=50', {
+		// 	method: 'GET',
+		// 	headers: {
+		// 		'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com',
+		// 		'X-RapidAPI-Key': 'bc864ba75dmsh17d4908165347bap1a2a98jsnf1350501706b'
+		// 	}
+		// })
+		// .then(function (response) {
+		// 	return response.json();
+		// })
+		// .then(function (data) {
+		// 	console.log(data);
+		// 	for (var i = 0; i <data.length; i++) {
+		// 		console.log(data[i].text);
+		// 		console.log(data[i].author);
 
-			var quoteText = document.getElementById('quote-text');
-			var quoteAuthor = document.getElementById('quote-author');
+		// 		var quoteText = document.getElementById('quote-text');
+		// 		var quoteAuthor = document.getElementById('quote-author');
 
-			quoteText.textContent = data[0].text;
-			quoteAuthor.textContent = data[0].author;
-		});
+		// 		quoteText.textContent = data[i].text;
+		// 		quoteAuthor.textContent = data[i].author;
+		// 	}
+		// });
 	
 		// INPUTTING RANDOM FOOD QUOTES
 		/*function inputFoodQuotes() {
@@ -148,8 +150,12 @@ $("document").ready(function() {
 	})
 
 	function populateRecipeList() {
-		for (var i = 0; i < recipeList.length; i++) {
-			$("#recipes-list").append($("<li><a href=" + recipeURL[i] + " target='_blank'><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></a><button class= \"fav-button\">Add to saved</button></li>"))
+		if (recipeList == "") {
+			$("#modal-no-recipes").css("display", "inline")
+		} else {
+			for (var i = 0; i < recipeList.length; i++) {
+				$("#recipes-list").append($("<li><a href=" + recipeURL[i] + " target='_blank'><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></a><button class= \"fav-button\">Add to saved</button></li>"))
+			}
 		}
 	}
 
@@ -198,16 +204,30 @@ $("document").ready(function() {
 	$("#saved-button").click(getSaved)
 	function getSaved(event) {
 		event.preventDefault()
-		console.log("yo")
 		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))]
-		console.log(savedRecipes)
 		$("#saved-recipes-modal").css("display", "inline")
 		if (savedRecipes[0] == null || savedRecipes[0] == undefined) {
 			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
 		} else {
 			for (var i = 0; i <savedRecipes[0].length; i++) {
-				$("#saved-recipes-list").append($("<li><a href=" + savedRecipes[0][i].link + " target='_blank'><p>" + savedRecipes[0][i].name + "</p><img src = " + savedRecipes[0][i].image + "></a></li>"))
+				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[0][i].link + " target='_blank'><p>" + savedRecipes[0][i].name + "</p><img src = " + savedRecipes[0][i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
 			}
 		}
 	}
+
+	// $("#saved-recipes-modal").on("click", $(".removeSaved-button"), removeSaved)
+	// function removeSaved(event) {
+	// 	var target = event.target
+	// 	var index = target.parentElement.id
+	// 	savedRecipes[0].splice(index, 1)
+	// 	localStorage.setItem("Saved", JSON.stringify(savedRecipes))
+	// 	if (savedRecipes[0] == null || savedRecipes[0] == undefined) {
+	// 		$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
+	// 	} else {
+	// 		for (var i = 0; i <savedRecipes[0].length; i++) {
+	// 			$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[0][i].link + " target='_blank'><p>" + savedRecipes[0][i].name + "</p><img src = " + savedRecipes[0][i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
+	// 		}
+	// 	}
+	// }
+
 }); //CODE ABOVE THIS LINE
