@@ -21,6 +21,47 @@ html, body {
     user-select: none;
 }
 
+/* ***** NAVIGATION ***** */
+#navigation {
+    position: fixed;
+    width: fit-content;
+    top: 0;
+    right: 0;
+    background-color: rgba(245, 245, 245, .8);
+    border: 2px solid var(--offwhite);
+    border-radius: 5px;
+    z-index: 9999;
+}
+
+#navigation ul {
+    margin: 15px 15px 15px 15px;
+    padding: 0;
+}
+
+#navigation ul li {
+   display: inline;
+}
+
+#navigation ul li button, #navigation ul li button a {
+    border: 2px solid var(--red);
+    border-radius: 5px;
+    height: 25px;
+    width: 60px;
+    font-family: var(--font);
+    font-size: 14px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--offwhite);
+    background-color: var(--red);
+}
+
+#navigation ul li button:hover, #navigation ul li button a:hover {
+    color: var(--offwhite);
+    background-color: var(--dkgrey);
+    border-color: var(--dkgrey);
+}
+
 /* ***** MAIN TOP SECTION W/ LOGOTYPE & PARAGRAPH ***** */
 
 #main {
@@ -271,12 +312,14 @@ html, body {
     font-weight: bolder;
     line-height: 28px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 #given-recipes ul li img {
     margin: 10px 0;
     width: 100%;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 #given-recipes ul li button {
@@ -383,60 +426,44 @@ html, body {
     display: none;
 }
 
-/* Recipe Ingredients Modal */
+/* ***** RECIPE PREVIEW & SAVED RECIPES MODAL ***** */
 
-#modal-recipe-ingredients {
+#saved-recipes-modal, #modal-recipe-ingredients {
     display: none;
 }
 
-#modal-recipe-ingredients #recipe-ingredients {
-    height: 70%;
-    width: 70%;
-    top: 15%;
-    left: 15%;
-    overflow-y: scroll;
-    z-index: 501;
-}
-
-#recipe-ingredients h3 {
-    font-family: 'Orelega One', cursive;
-    font-size: 40px;
-}
-
-#recipe-ingredients ul {
-    padding: 0;
-    text-align: center;
-    vertical-align: top;
-}
-
-/* ***** SAVED RECIPES MODAL ***** */
-
-#saved-recipes-modal {
-    display: none;
-}
-
-#saved-recipes-modal #saved-recipes::-webkit-scrollbar {
+#saved-recipes-modal #saved-recipes::-webkit-scrollbar, #modal-recipe-ingredients #recipe-ingredients::-webkit-scrollbar {
     display: none;
   }
 
-#saved-recipes-modal #saved-recipes {
+#saved-recipes-modal #saved-recipes, #modal-recipe-ingredients #recipe-ingredients {
     height: 70%;
     width: 70%;
     top: 15%;
     left: 15%;
+    vertical-align: middle;
     overflow-y: scroll;
     z-index: 501;
 }
 
-#saved-recipes h3 {
+#saved-recipes h3, #recipe-ingredients h3 {
     font-family: 'Orelega One', cursive;
     font-size: 40px;
+    text-transform: lowercase;
+}
+
+#saved-recipes ul, #recipe-ingredients ul {
+    margin: 25px auto;
+    padding: 0;
+    vertical-align: middle;
 }
 
 #saved-recipes ul {
-    padding: 0;
+    text-align: left;;
+}
+
+#recipe-ingredients ul {
     text-align: center;
-    vertical-align: top;
 }
 
 #saved-recipes #nothing-saved-text {
@@ -489,11 +516,17 @@ html, body {
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--offwhite);
-    background-color: var(--red);
-    border: 1px solid var(--red);
+    color: var(--red);
+    background-color: var(--offwhite);
+    border: 1px solid var(--offwhite);
     border-radius: 5px;
     cursor: pointer;
+}
+
+#saved-recipes ul li button:hover {
+    color: var(--offwhite);
+    background-color: var(--dkgrey);
+    border-color: var(--dkgrey);
 }
 
 #saved-recipes div {
@@ -511,12 +544,6 @@ html, body {
     background-color: var(--red);
     border: 2px solid var(--red);
     border-radius: 5px;
-}
-
-#saved-recipes ul li button:hover {
-    color: var(--dkgrey);
-    background-color: var(--offwhite);
-    border-color: var(--offwhite);
 }
 
 #saved-recipes div button:hover {
