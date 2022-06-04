@@ -12,11 +12,13 @@
 </head>
 <body>
 
-    <section class="section">
+    <section id="top-of-page" class="section">
 
         <div id="navigation">
+            <span class="logotype">WhatTheFridge.</span>
             <ul>
-                <li><button id="home-button" class="button"><a href="#main">Home</a></button></li>
+                <li><button id="home-button" class="button"><a href="#top-of-page">Home</a></button></li>
+                <li><button id="about-button" class="button">About</button></li>
                 <li><button id="saved-button" class="button">Saved</button></li>
             </ul>
         </div>
@@ -58,8 +60,21 @@
 
             </ul>
             <div>
-                <button id="top-button" class="button"><a href="#main">Back To Top</a></button>
+                <button id="top-button" class="button"><a href="#top-of-page">Back To Top</a></button>
                 <button id="given-back-button" class="button">Go Back</button>
+            </div>
+        </div>
+
+        <div id="modal-about" class="our-modal-container">
+            <div id= "about" class="our-modal">
+                <h3>about</h3>
+                <ul>
+                    <li><span class="logotype">WhatTheFridge.</span> is an interactive recipe finder based on what a user has in their fridge (or cupboard). This also ties into searching for recipes based on ingredients that are near the end of their shelf life. </li>
+                    <li>This was a collabortion created by William Liao, Taylor Moss, Mubashera Mashraka, Jessica Dittrich</li>
+                </ul>
+                <div>
+                    <button id="about-back-button" class="button">Go Back</button>
+                </div>
             </div>
         </div>
 
@@ -73,7 +88,7 @@
             </div>
         </div>
 
-        <div id="saved-recipes-modal" class="our-modal-container">
+        <div id="modal-saved-recipes" class="our-modal-container">
             <div id="saved-recipes" class="our-modal">
                 <h3>your saved recipes</h3>
                 <ul id="saved-recipes-list">
