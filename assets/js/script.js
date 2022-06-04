@@ -248,7 +248,12 @@ $("document").ready(function () {
 	})
 
 	/****** CLICKING OUTSIDE MODAL TO GET OUT OF MODAL - RECIPE PREVIEW MODAL ******/
-	$('div#modal-recipe-ingredients').click(function () { $(this).hide() });
+	$('div#modal-recipe-ingredients').click(function () {
+		$(this).hide()
+		$("#modal-recipe-ingredients").children(".our-modal").children("div").children(":first").remove()
+		$("#modal-recipe-ingredients").children(".our-modal").children("h3").remove()
+		$("#recipe-ingredients-list").children("li").remove()
+	});
 	$('div#recipe-ingredients').click(function (e) {
 		e.stopPropagation();
 	});
