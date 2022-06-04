@@ -9,8 +9,8 @@ User Interface: In order to create a distraction free and efficiently accessible
 
 External Sources 
    A total of two APIs are used in this project: 
-    * The first API,' Yummly' (https://rapidapi.com/apidojo/api/yummly2/) is used to discover recipies in accordance to the ingredients posted by the user, to create a         collection of possible dishes 
-    * The second API, 'Famous Quotes' (https://rapidapi.com/saicoder/api/famous-quotes4/) is used to generate a new quote every few seconds to add an element of fun 
+      - The first API,' Yummly' (https://rapidapi.com/apidojo/api/yummly2/) is used to discover recipies in accordance to the ingredients posted by the user, to create a collection of possible dishes 
+      - The second API, 'Famous Quotes' (https://rapidapi.com/saicoder/api/famous-quotes4/) is used to generate a new quote every few seconds to add an element of fun 
 
 Collaboration: For the purpose of producing this project, team members (i.e., William Liao, Taylor Moss, Mubashera Mashraka & Jessica Dittrich) divided up the work into certain duties and thus were assigned tasks. 
 
