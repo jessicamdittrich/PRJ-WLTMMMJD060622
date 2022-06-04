@@ -383,6 +383,32 @@ html, body {
     display: none;
 }
 
+/* Recipe Ingredients Modal */
+
+#modal-recipe-ingredients {
+    display: none;
+}
+
+#modal-recipe-ingredients #recipe-ingredients {
+    height: 70%;
+    width: 70%;
+    top: 15%;
+    left: 15%;
+    overflow-y: scroll;
+    z-index: 501;
+}
+
+#recipe-ingredients h3 {
+    font-family: 'Orelega One', cursive;
+    font-size: 40px;
+}
+
+#recipe-ingredients ul {
+    padding: 0;
+    text-align: center;
+    vertical-align: top;
+}
+
 /* ***** SAVED RECIPES MODAL ***** */
 
 #saved-recipes-modal {
