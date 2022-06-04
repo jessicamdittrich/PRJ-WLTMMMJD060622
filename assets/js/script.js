@@ -1,13 +1,13 @@
-$("document").ready(function() {
+$("document").ready(function () {
 	// API key
 	const options = {
 		method: 'GET',
 		headers: {
 			'X-RapidAPI-Host': 'yummly2.p.rapidapi.com',
-    		'X-RapidAPI-Key': 'bc864ba75dmsh17d4908165347bap1a2a98jsnf1350501706b'
+			'X-RapidAPI-Key': 'bc864ba75dmsh17d4908165347bap1a2a98jsnf1350501706b'
 		}
 	};
-	
+
 	var searchURL
 	var ingredient
 	var recipeData = []
@@ -18,39 +18,46 @@ $("document").ready(function() {
 	var recipeURL = []
 	var savedRecipes = []
 
-		// RANDOM FOOD QUOTES
-		// fetch('https://famous-quotes4.p.rapidapi.com/random?category=food&count=50', {
-		// 	method: 'GET',
-		// 	headers: {
-		// 		'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com',
-		// 		'X-RapidAPI-Key': 'bc864ba75dmsh17d4908165347bap1a2a98jsnf1350501706b'
-		// 	}
-		// })
-		// .then(function (response) {
-		// 	return response.json();
-		// })
-		// .then(function (data) {
-		// 	console.log(data);
-		// 	for (var i = 0; i <data.length; i++) {
-		// 		console.log(data[i].text);
-		// 		console.log(data[i].author);
+	/****** RANDOM (FOOD) QUOTES API ******/
+	fetch('https://famous-quotes4.p.rapidapi.com/random?category=food&count=50', {
+		method: 'GET',
+		headers: {
+			'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com',
+			'X-RapidAPI-Key': 'bc864ba75dmsh17d4908165347bap1a2a98jsnf1350501706b'
+		}
+	})
+		.then(function (response) {
+			return response.json();
+		})
+		.then(function (data) {
+			//console.log(data);
 
-		// 		var quoteText = document.getElementById('quote-text');
-		// 		var quoteAuthor = document.getElementById('quote-author');
+			var quoteText = document.getElementById('quote-text');
+			var quoteAuthor = document.getElementById('quote-author');
 
-		// 		quoteText.textContent = data[i].text;
-		// 		quoteAuthor.textContent = data[i].author;
-		// 	}
-		// });
-	
-		// INPUTTING RANDOM FOOD QUOTES
-		/*function inputFoodQuotes() {
-			var quoteText = getElementById('quote-text');
-			var quoteAuthor = getElementById('quote-author');
+			/****** SHOWING RANDOM QUOTE ON PAGE LOAD ******/
+			for (var i = 0; i < data.length; i++) {
+					quoteText.textContent = data[i].text;
+					quoteAuthor.textContent = data[i].author;
+			}
 
-			quoteText.textContent(data[0].text);
-			quoteAuthor.textContent(data[0].author);
-		}*/
+			/****** CYCLING THROUGH TO SHOW 1 OF THE 50 PULLED QUOTES EVERY 2 MINUTES ******/
+			function timedLoop() {
+				var i = 0;
+				var a = data[i].text;
+
+				setTimeout(function () {
+					quoteText.textContent = data[i].text;
+					quoteAuthor.textContent = data[i].author;
+					i++;
+					if (i < a.length) {
+						timedLoop();
+					}
+				}, 120000)
+			}
+			timedLoop();
+
+		});
 
 	$("#add-button").click(add)
 	// Initializing a function that takes the user inputs and add them to an array of ingredients to be searched
@@ -62,10 +69,14 @@ $("document").ready(function() {
 		// makes sure there is no repeating ingredient in the search
 		if (ingredientsChosen.includes(ingredient) == false) {
 			ingredientsChosen.push(ingredient);
-			ingredientList()
+			ingredientList();
+		/****** THIS DOES NOT WORK YET ******/
+		//} else if (ingredient == "") {
+		//	ingredientsChosen.remove(ingredient);
+		//	$("#modal-no-ingredients").css("display", "inline");
 		}
 	}
-	
+
 	// Initializing the search button
 	$("#search-button").click(search)
 
@@ -78,10 +89,10 @@ $("document").ready(function() {
 		$("#recipes-list").children().remove()
 		searchURL = "https://yummly2.p.rapidapi.com/feeds/search?start=0&maxResult=18&q=" + ingredientsChosen
 		fetch(searchURL, options)
-			.then(function(response) {
+			.then(function (response) {
 				return response.json()
 			})
-			.then(function(data) {
+			.then(function (data) {
 				// stores the WHOLE data of every recipe
 				recipeData = data.feed
 				// stores ONLY the recipe names into an array
@@ -106,10 +117,10 @@ $("document").ready(function() {
 			})
 			.then(populateRecipeList)
 			.catch(err => console.error(err))
-			$("#given-recipes").css("display", "block")
+		$("#given-recipes").css("display", "block")
 	}
 
-	// ADDING INGREDIENTS TO "YOUR INGREDIENTS CHOSEN"
+	/****** ADDING INGREDIENTS TO "YOUR INGREDIENTS CHOSEN" ******/
 	function ingredientList() {
 		var ingredientsUl = document.getElementById('ingredients-list');
 		var ingredientLi = document.createElement('li');
@@ -126,16 +137,15 @@ $("document").ready(function() {
 
 	// initializing a function to remove an ingredient from the ingredient list element and the ingredientChosen array
 	// also setting an event listener to the remove buttons
-
-	$("#ingredients-list").on("click", "#remove-button", function(event) {
+	$("#ingredients-list").on("click", "#remove-button", function (event) {
 		var target = event.target
 		var removeThis = target.parentElement.textContent
 		removeThis = removeThis.replace("✖", "")
 		removeThis = removeThis.replace(" ", "%2C%20")
 		var index = ingredientsChosen.indexOf(removeThis)
-  		if (index > -1) {
-    		ingredientsChosen.splice(index, 1);
-  		}
+		if (index > -1) {
+			ingredientsChosen.splice(index, 1);
+		}
 		target.parentElement.remove()
 	})
 
@@ -150,35 +160,54 @@ $("document").ready(function() {
 	}
 
 	// DISPLAYING ADDED INGREDIENTS WHEN BUTTON IS PRESSED
-	$("#add-button").click(function() {
+	$("#add-button").click(function () {
+		$('#quotes').css('display', 'none'); /****** HIDING QUOTES DIV WHEN INGREDIENTS DIV SHOWS ******/
 		$("#chosen-ingredients").css("display", "block")
 	})
 
 	// Remove recipe list when GO BACK button is pressed
-	$("#given-back-button").click(function() {
+	$("#given-back-button").click(function () {
 		$("#given-recipes").css("display", "none")
 		$("#chosen-ingredients").css("display", "block")
 	})
 
 	// Remove recipe list when ADD button is pressed
-	$("#add-button").click(function() {
+	$("#add-button").click(function () {
 		$("#given-recipes").css("display", "none")
 	})
 
 	// Remove saved recipes modal when GO BACK button is pressed
-	$("#saved-back-button").click(function() {
+	$("#saved-back-button").click(function () {
 		$("#saved-recipes-modal").css("display", "none")
 	})
 
 	// Remove no ingredients modal when GO BACK button is pressed
-	$("#modal-ingradients-back-button").click(function() {
+	$("#modal-ingredients-back-button").click(function () {
 		$("#modal-no-ingredients").css("display", "none")
 	})
 
 	// Remove no recipes modal when GO BACK button is pressed
-	$("#modal-recipes-back-button").click(function() {
+	$("#modal-recipes-back-button").click(function () {
 		$("#modal-no-recipes").css("display", "none")
 	})
+
+	/****** CLICKING OUTSIDE MODAL TO GET OUT OF MODAL - SAVED RECIPES MODAL ******/
+	$('div#saved-recipes-modal').click(function () { $(this).hide() });
+	$('div#saved-recipes').click(function (e) {
+		e.stopPropagation();
+	});
+
+	/****** CLICKING OUTSIDE MODAL TO GET OUT OF MODAL - NO INGREDIENTS MODAL ******/
+	$('div#modal-no-ingredients').click(function () { $(this).hide() });
+	$('div#no-ingredients').click(function (e) {
+		e.stopPropagation();
+	});
+
+	/****** CLICKING OUTSIDE MODAL TO GET OUT OF MODAL - NO RECIPES MODAL ******/
+	$('div#modal-no-recipes').click(function () { $(this).hide() });
+	$('div#no-recipes').click(function (e) {
+		e.stopPropagation();
+	});
 
 	// Initializing function to retrieve relevant data to save a recipe to localStorage
 	$("#recipes-list").on("click", ".fav-button", save)
@@ -187,6 +216,7 @@ $("document").ready(function() {
 		var target = event.target
 		var recipeName = $(target).siblings().children(":first")[0].innerText
 		var index = recipeList.indexOf(recipeName)
+
 		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
 			savedRecipes = [{name: recipeList[index], link: recipeURL[index], image: imageList[index]}]
 			console.log(savedRecipes)
@@ -208,6 +238,7 @@ $("document").ready(function() {
 		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
 			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
 		} else {
+
 			for (var i = 0; i <savedRecipes.length; i++) {
 				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[i].link + " target='_blank'><p>" + savedRecipes[i].name + "</p><img src = " + savedRecipes[i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
 			}
