@@ -1,5 +1,6 @@
+// waits for the DOM to load before continuing
 $("document").ready(function () {
-	// API key
+	// Recipe API key
 	const options = {
 		method: 'GET',
 		headers: {
@@ -8,6 +9,7 @@ $("document").ready(function () {
 		}
 	};
 
+	// Initializing some main variables that will be used throughout the script
 	var searchURL
 	var ingredient
 	var recipeData = []
@@ -59,12 +61,12 @@ $("document").ready(function () {
 
 		});
 
+	// Initializing a function that takes the user inputs and add them to an array of ingredients to be searched. Also attaching a button that calls this function
 	$("#add-button").click(add)
-	// Initializing a function that takes the user inputs and add them to an array of ingredients to be searched
 	function add(event) {
 		event.preventDefault()
 		ingredient = $(".input").val()
-		// simply replacing the space in the search with %2C%20 to be placed into the URL
+		// simply replacing the space in the search with %2C%20 so that it can be used in the search function below
 		ingredient = ingredient.replace(" ", "%2C%20")
 		// makes sure there is no repeating ingredient in the search
 		if (ingredientsChosen.includes(ingredient) == false) {
@@ -77,17 +79,16 @@ $("document").ready(function () {
 		}
 	}
 
-	// Initializing the search button
+	// Initializing search function that takes the user input and fetches the recipe API. Also attaching a button that would call this function
 	$("#search-button").click(search)
-
-	// Initializing search function that retrieves ingredient data and fetches the recipe API
 	function search(event) {
 		event.preventDefault()
-		// makes the chosen ingredients div disappear
+		// makes the chosen ingredients div disappear and the recipes div appear
 		$("#chosen-ingredients").css("display", "none")
 		$("#given-recipes").css("display", "block")
-		// clears the recipe section of any existing recipes
+		// clears the recipe div so that it may be repopulated
 		$("#recipes-list").children().remove()
+		// the fetch function that would gather all the recipe data we need and store them to respective variables
 		searchURL = "https://yummly2.p.rapidapi.com/feeds/search?start=0&maxResult=18&q=" + ingredientsChosen
 		fetch(searchURL, options)
 			.then(function (response) {
@@ -106,28 +107,30 @@ $("document").ready(function () {
 				for (var i = 0; i < recipeData.length; i++) {
 					ingredientData.push(recipeData[i].content.ingredientLines)
 				}
-				// stores a link to an image that represents the finished dish for each recipe
+				// stores the links to images that represents the finished dish for each recipe
 				imageList = []
 				for (var i = 0; i < recipeData.length; i++) {
 					imageList.push(recipeData[i].content.details.images[0].hostedLargeUrl)
 				}
+				// stores the links to the full recipes
 				recipeURL = []
 				for (var i = 0; i < recipeData.length; i++) {
 					recipeURL.push(recipeData[i].content.details.directionsUrl)
 				}
 			})
+			// after all the variables are defined by the fetch function, calls a function to populate the recipe div
 			.then(populateRecipeList)
 			.catch(err => console.error(err))
 	}
 
 	/****** ADDING INGREDIENTS TO "YOUR INGREDIENTS CHOSEN" ******/
+	// also creates list elements as well as a button element in the HTML
 	function ingredientList() {
 		var ingredientsUl = document.getElementById('ingredients-list');
 		var ingredientLi = document.createElement('li');
 		var removeButton = document.createElement('button');
 		removeButton.textContent = '✖';
 		ingredientLi.innerHTML = $(".input").val()
-
 		for (var i = 0; i < ingredientsChosen.length; i++) {
 			ingredientsUl.appendChild(ingredientLi);
 			ingredientLi.appendChild(removeButton);
@@ -136,7 +139,7 @@ $("document").ready(function () {
 	};
 
 	// initializing a function to remove an ingredient from the ingredient list element and the ingredientChosen array
-	// also setting an event listener to the remove buttons
+	// also delegates the function to the remove buttons
 	$("#ingredients-list").on("click", "#remove-button", function (event) {
 		var target = event.target
 		var removeThis = target.parentElement.textContent
@@ -149,16 +152,22 @@ $("document").ready(function () {
 		target.parentElement.remove()
 	})
 
+	// This function populates the recipes div
 	function populateRecipeList() {
+		// first checks that the recipe div is showing
 		if ($("#given-recipes").attr("style") == "display: block;") {
+			// clears the recipes div so that it may be populated
 			$("#recipes-list").children().remove()
+			// if there are no recipes found, pull up a modal that informs the user
 			if (recipeList == "") {
 				$("#modal-no-recipes").css("display", "inline")
 			} else {
+				// otherwise populate the div with the list of recipes; including the name, image, and a button that allows the user to save that recipe
 				for (var i = 0; i < recipeList.length; i++) {
 					$("#recipes-list").append($("<li id = " + i + "><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "><button class= \"fav-button\">Add to saved</button></li>"))
 				}
 			}
+			// logic to check that the recipes shown aren't already saved. if they are, change the attached button so the user is aware
 			savedRecipes = [JSON.parse(localStorage.getItem("Saved"))][0]
 			var thisThing
 			var index
@@ -173,6 +182,8 @@ $("document").ready(function () {
 		}
 	}
 
+	// function that retrieves the ingredient list of a specific recipe
+	// also delegates the function to the proper DOM elements
 	$("#recipes-list").on("click", "p", getIngredient)
 	$("#recipes-list").on("click", "img", getIngredient)
 	function getIngredient(event) {
@@ -186,10 +197,13 @@ $("document").ready(function () {
 		for (var i = 0; i < recipeIngredients.length; i++) {
 			$("#recipe-ingredients-list").append($("<li>" + recipeIngredients[i] + "</li>"))
 		}
+		// after retrieving the specific data, populate the modal that will show it
 		$("#modal-recipe-ingredients").children(".our-modal").prepend($("<h3>" + recipeList[index] + "</h3>"))
 		$("#modal-recipe-ingredients").children(".our-modal").children("div").prepend($("<a href =" + recipeURL[index] + " target='_blank'><button id=\"modal-recipe-ingredients-directions-button\" class=\"button\">Directions</button></a>"))
 		$("#modal-recipe-ingredients").css("display", "inline")
 	}
+
+	// makes the ingredients list modal initalized above disappear when instructed to
 	$("#modal-recipe-ingredients-back-button").click(function() {
 		$("#modal-recipe-ingredients").css("display", "none")
 		$("#modal-recipe-ingredients").children(".our-modal").children("div").children(":first").remove()
@@ -248,7 +262,8 @@ $("document").ready(function () {
 		e.stopPropagation();
 	});
 
-	// Initializing function to retrieve relevant data to save a recipe to localStorage
+	// Initializing function tha retrieves relevant data to save a recipe to localStorage
+	// delegates it to a button
 	$("#recipes-list").on("click", ".fav-button", save)
 	function save(event) {
 		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))][0]
@@ -265,6 +280,7 @@ $("document").ready(function () {
 		target.setAttribute("class", "recipeSaved-button")
 	}
 
+	// a modifaction of the removeSaved function with added logic find which saved recipe to remove
 	$("#recipes-list").on("click", ".recipeSaved-button", removeSaved2)
 	function removeSaved2(event) {
 		var target = event.target
@@ -300,6 +316,7 @@ $("document").ready(function () {
 		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))][0]
 		$("#saved-recipes-modal").css("display", "inline")
 		$("#saved-recipes-list").children().remove()
+		// logic that lets the user know if there aren't any saved recipes
 		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
 			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
 		} else {
@@ -309,6 +326,7 @@ $("document").ready(function () {
 		}
 	}
 
+	// this function removes a saved recipe from local storage and on the HTML
 	$("#saved-recipes-list").on("click", ".removeSaved-button", removeSaved)
 	function removeSaved(event) {
 		var target = event.target
@@ -316,6 +334,7 @@ $("document").ready(function () {
 		savedRecipes.splice(index, 1)
 		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
 		$("#saved-recipes-list").children().remove()
+		// same logic that lets the user know if there aren't any saved recipes
 		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
 			savedRecipes = []
 			localStorage.setItem("Saved", JSON.stringify(savedRecipes))
@@ -327,6 +346,7 @@ $("document").ready(function () {
 		}
 	}
 
+	// function that clears ALL saved recipes
 	$("#saved-recipes").on("click", "#clear-all-button", clearSaved)
 	function clearSaved(event) {
 		savedRecipes = []
