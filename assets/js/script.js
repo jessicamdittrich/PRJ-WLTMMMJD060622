@@ -85,6 +85,7 @@ $("document").ready(function () {
 		event.preventDefault()
 		// makes the chosen ingredients div disappear
 		$("#chosen-ingredients").css("display", "none")
+		$("#given-recipes").css("display", "block")
 		// clears the recipe section of any existing recipes
 		$("#recipes-list").children().remove()
 		searchURL = "https://yummly2.p.rapidapi.com/feeds/search?start=0&maxResult=18&q=" + ingredientsChosen
@@ -117,7 +118,6 @@ $("document").ready(function () {
 			})
 			.then(populateRecipeList)
 			.catch(err => console.error(err))
-		$("#given-recipes").css("display", "block")
 	}
 
 	/****** ADDING INGREDIENTS TO "YOUR INGREDIENTS CHOSEN" ******/
@@ -150,27 +150,52 @@ $("document").ready(function () {
 	})
 
 	function populateRecipeList() {
-		if (recipeList == "") {
-			$("#modal-no-recipes").css("display", "inline")
-		} else {
-			for (var i = 0; i < recipeList.length; i++) {
-				$("#recipes-list").append($("<li id = " + i + "><a href=" + recipeURL[i] + " target='_blank'><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></a><button class= \"fav-button\">Add to saved</button></li>"))
+		if ($("#given-recipes").attr("style") == "display: block;") {
+			$("#recipes-list").children().remove()
+			if (recipeList == "") {
+				$("#modal-no-recipes").css("display", "inline")
+			} else {
+				for (var i = 0; i < recipeList.length; i++) {
+					$("#recipes-list").append($("<li id = " + i + "><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "><button class= \"fav-button\">Add to saved</button></li>"))
+				}
 			}
-		}
-		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))][0]
-		console.log(savedRecipes)
-		var thisThing
-		var index
-		for (var i = 0; i < savedRecipes.length; i++) {
-			thisThing = savedRecipes[i].name
-			if (recipeList.includes(thisThing)) {
-				index = recipeList.indexOf(thisThing)
-				console.log(index)
-				$("#recipes-list").children("#" + index).children("button").text("Saved")
-				$("#recipes-list").children("#" + index).children("button").attr("class", "recipeSaved-button")
+			savedRecipes = [JSON.parse(localStorage.getItem("Saved"))][0]
+			var thisThing
+			var index
+			for (var i = 0; i < savedRecipes.length; i++) {
+				thisThing = savedRecipes[i].name
+				if (recipeList.includes(thisThing)) {
+					index = recipeList.indexOf(thisThing)
+					$("#recipes-list").children("#" + index).children("button").text("Saved")
+					$("#recipes-list").children("#" + index).children("button").attr("class", "recipeSaved-button")
+				}
 			}
 		}
 	}
+
+	$("#recipes-list").on("click", "p", getIngredient)
+	$("#recipes-list").on("click", "img", getIngredient)
+	function getIngredient(event) {
+		var target = event.target
+		var index = target.parentElement.id
+		var recipeIngredients = []
+		var ingredientArray = ingredientData[index]
+		for (var i = 0; i < ingredientArray.length; i++) {
+			recipeIngredients.push(ingredientArray[i].wholeLine)
+		}
+		for (var i = 0; i < recipeIngredients.length; i++) {
+			$("#recipe-ingredients-list").append($("<li>" + recipeIngredients[i] + "</li>"))
+		}
+		$("#modal-recipe-ingredients").children(".our-modal").prepend($("<h3>" + recipeList[index] + "</h3>"))
+		$("#modal-recipe-ingredients").children(".our-modal").children("div").prepend($("<a href =" + recipeURL[index] + " target='_blank'><button id=\"modal-recipe-ingredients-directions-button\" class=\"button\">Directions</button></a>"))
+		$("#modal-recipe-ingredients").css("display", "inline")
+	}
+	$("#modal-recipe-ingredients-back-button").click(function() {
+		$("#modal-recipe-ingredients").css("display", "none")
+		$("#modal-recipe-ingredients").children(".our-modal").children("div").children(":first").remove()
+		$("#modal-recipe-ingredients").children(".our-modal").children("h3").remove()
+		$("#recipe-ingredients-list").children("li").remove()
+	})
 
 	// DISPLAYING ADDED INGREDIENTS WHEN BUTTON IS PRESSED
 	$("#add-button").click(function () {
@@ -192,6 +217,7 @@ $("document").ready(function () {
 	// Remove saved recipes modal when GO BACK button is pressed
 	$("#saved-back-button").click(function () {
 		$("#saved-recipes-modal").css("display", "none")
+		populateRecipeList()
 	})
 
 	// Remove no ingredients modal when GO BACK button is pressed
@@ -227,9 +253,8 @@ $("document").ready(function () {
 	function save(event) {
 		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))][0]
 		var target = event.target
-		var recipeName = $(target).siblings().children(":first")[0].innerText
+		var recipeName = $(target).siblings(":first")[0].innerText
 		var index = recipeList.indexOf(recipeName)
-
 		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
 			savedRecipes = [{name: recipeList[index], link: recipeURL[index], image: imageList[index]}]
 		} else {
@@ -243,9 +268,16 @@ $("document").ready(function () {
 	$("#recipes-list").on("click", ".recipeSaved-button", removeSaved2)
 	function removeSaved2(event) {
 		var target = event.target
-		var removeThis = $(target).siblings().children(":first").innerText
-		var index = savedRecipes.indexOf({name: removeThis})
-		savedRecipes.splice(index, 1)
+		var removeThis = $(target).siblings("p")[0].innerText
+		var thisThing
+		var index
+		for (var i = 0; i < savedRecipes.length; i++) {
+			thisThing = savedRecipes[i].name
+			if (thisThing == removeThis) {
+				index = i
+				savedRecipes.splice(index, 1)
+			}
+		}
 		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
 		$("#saved-recipes-list").children().remove()
 		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
@@ -271,7 +303,6 @@ $("document").ready(function () {
 		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
 			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
 		} else {
-
 			for (var i = 0; i <savedRecipes.length; i++) {
 				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[i].link + " target='_blank'><p>" + savedRecipes[i].name + "</p><img src = " + savedRecipes[i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
 			}
