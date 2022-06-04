@@ -1,8 +1,8 @@
 # WhatTheFridge.
 WhatTheFridge. is a website dedicated to helping the user discover possible recipies with ingredients already existing in their fridge or pantry. 
 
-## Technologies used, 
+## Technologies Utilized 
 
-## screenshot 
+## Screenshot: What this project looks like 
 
-## link to deployed application
+## Link 
