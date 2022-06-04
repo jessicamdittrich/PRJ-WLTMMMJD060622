@@ -8,7 +8,7 @@ WhatTheFridge was developed to combat food waste and maximize the value of exisi
 User Interface: In order to create a distraction free and efficiently accessible website, a minimalistic and clean cut user interface was curated, allowing all the attention to be on the ingredients and recipies discovered. However, to combat apathy, a fun quote related to food is posted to make the application fun. 
 
 External Sources 
-- A total of two APIs are used in this project: 
+   A total of two APIs are used in this project: 
     * The first API,' Yummly' (https://rapidapi.com/apidojo/api/yummly2/) is used to discover recipies in accordance to the ingredients posted by the user, to create a         collection of possible dishes 
     * The second API, 'Famous Quotes' (https://rapidapi.com/saicoder/api/famous-quotes4/) is used to generate a new quote every few seconds to add an element of fun 
 
@@ -28,5 +28,5 @@ What we like about it
 
 ## Final product:
 
-*reflection
+*reflection*
 
