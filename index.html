@@ -14,6 +14,13 @@
 
     <section class="section">
 
+        <div id="navigation">
+            <ul>
+                <li><button id="home-button" class="button"><a href="#main">Home</a></button></li>
+                <li><button id="saved-button" class="button">Saved</button></li>
+            </ul>
+        </div>
+
         <div id="main" class="container">
             <img src="assets/images/fridge.png" />
             <h1>WhatTheFridge.</h1>
@@ -26,8 +33,7 @@
             <form>
                 <ul>
                     <li><input class="input" type="text" placeholder="tell me what you have in your fridge"></li>
-                    <li><button id="add-button" class="button">Add</button></li>
-                    <li><button id="saved-button" class="button">Saved</button></li>
+                    <li><button id="add-button" class="button">Add Ingredient</button></li>
                 </ul>
             </form>
         </div>
@@ -56,6 +62,16 @@
             </div>
         </div>
 
+        <div id="modal-recipe-ingredients" class="our-modal-container">
+            <div id= "recipe-ingredients" class="our-modal">
+                <ul id="recipe-ingredients-list">
+                </ul>
+                <div>
+                    <button id="modal-recipe-ingredients-back-button" class="button">Go Back</button>
+                </div>
+            </div>
+        </div>
+
         <div id="saved-recipes-modal" class="our-modal-container">
             <div id="saved-recipes" class="our-modal">
                 <h3>your saved recipes</h3>
@@ -73,16 +89,6 @@
                 <p>Sorry, <span class="logotype">WhatTheFridge.</span> doesn't contain that ingredient.</p>
                 <div>
                     <button id="modal-ingredients-back-button" class="button">Go Back</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="modal-recipe-ingredients" class="our-modal-container">
-            <div id = "recipe-ingredients" class="our-modal">
-                <ul id="recipe-ingredients-list">
-                </ul>
-                <div>
-                    <button id="modal-recipe-ingredients-back-button" class="button">Go Back</button>
                 </div>
             </div>
         </div>
