@@ -245,6 +245,8 @@ $("document").ready(function () {
 	// Remove no recipes modal when GO BACK button is pressed
 	$("#modal-recipes-back-button").click(function () {
 		$("#modal-no-recipes").css("display", "none")
+		$("#given-recipes").css("display", "none")
+		$("#chosen-ingredients").css("display", "block")
 	})
 
 	/****** CLICKING OUTSIDE MODAL TO GET OUT OF MODAL - RECIPE PREVIEW MODAL ******/
