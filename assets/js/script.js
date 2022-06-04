@@ -144,7 +144,20 @@ $("document").ready(function() {
 			$("#modal-no-recipes").css("display", "inline")
 		} else {
 			for (var i = 0; i < recipeList.length; i++) {
-				$("#recipes-list").append($("<li><a href=" + recipeURL[i] + " target='_blank'><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></a><button class= \"fav-button\">Add to saved</button></li>"))
+				$("#recipes-list").append($("<li id = " + i + "><a href=" + recipeURL[i] + " target='_blank'><p>" + recipeList[i] + "</p><img src = " + imageList[i] + "></a><button class= \"fav-button\">Add to saved</button></li>"))
+			}
+		}
+		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))][0]
+		console.log(savedRecipes)
+		var thisThing
+		var index
+		for (var i = 0; i < savedRecipes.length; i++) {
+			thisThing = savedRecipes[i].name
+			if (recipeList.includes(thisThing)) {
+				index = recipeList.indexOf(thisThing)
+				console.log(index)
+				$("#recipes-list").children("#" + index).children("button").text("Saved")
+				$("#recipes-list").children("#" + index).children("button").attr("class", "recipeSaved-button")
 			}
 		}
 	}
@@ -189,12 +202,33 @@ $("document").ready(function() {
 		var index = recipeList.indexOf(recipeName)
 		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
 			savedRecipes = [{name: recipeList[index], link: recipeURL[index], image: imageList[index]}]
-			console.log(savedRecipes)
 		} else {
 			savedRecipes.unshift({name: recipeList[index], link: recipeURL[index], image: imageList[index]})
-			console.log(savedRecipes)
 		}
 		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
+		target.textContent = "Saved"
+		target.setAttribute("class", "recipeSaved-button")
+	}
+
+	$("#recipes-list").on("click", ".recipeSaved-button", removeSaved2)
+	function removeSaved2(event) {
+		var target = event.target
+		var removeThis = $(target).siblings().children(":first").innerText
+		var index = savedRecipes.indexOf({name: removeThis})
+		savedRecipes.splice(index, 1)
+		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
+		$("#saved-recipes-list").children().remove()
+		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
+			savedRecipes = []
+			localStorage.setItem("Saved", JSON.stringify(savedRecipes))
+			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
+		} else {
+			for (var i = 0; i <savedRecipes.length; i++) {
+				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[i].link + " target='_blank'><p>" + savedRecipes[i].name + "</p><img src = " + savedRecipes[i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
+			}
+		}
+		target.textContent = "Add to saved"
+		target.setAttribute("class", "fav-button")
 	}
 
 	// Initializing function to retrieve localStorage and put it into the saved recipes div
@@ -202,7 +236,6 @@ $("document").ready(function() {
 	function getSaved(event) {
 		event.preventDefault()
 		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))][0]
-		console.log(savedRecipes)
 		$("#saved-recipes-modal").css("display", "inline")
 		$("#saved-recipes-list").children().remove()
 		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
