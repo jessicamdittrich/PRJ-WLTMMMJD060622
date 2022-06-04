@@ -214,6 +214,16 @@ $("document").ready(function () {
 		$("#quotes").css("display", "block")
 	})
 
+	/****** ABOUT BUTTON SHOWS MODAL *******/
+	$("#about-button").click(function () {
+		$("#modal-about").css("display", "inline")
+	});
+
+	/****** ABOUT GO BACK BUTTON HIDES MODAL *******/
+	$("#about-back-button").click(function () {
+		$("#modal-about").css("display", "none")
+	});
+
 	// DISPLAYING ADDED INGREDIENTS WHEN BUTTON IS PRESSED
 	$("#add-button").click(function () {
 		$('#quotes').css('display', 'none'); /****** HIDING QUOTES DIV WHEN INGREDIENTS DIV SHOWS ******/
@@ -233,7 +243,7 @@ $("document").ready(function () {
 
 	// Remove saved recipes modal when GO BACK button is pressed
 	$("#saved-back-button").click(function () {
-		$("#saved-recipes-modal").css("display", "none")
+		$("#modal-saved-recipes").css("display", "none")
 		populateRecipeList()
 	})
 
@@ -247,6 +257,12 @@ $("document").ready(function () {
 		$("#modal-no-recipes").css("display", "none")
 	})
 
+	/****** CLICKING OUTSIDE MODAL TO GET OUT OF MODAL - ABOUT MODAL ******/
+	$('div#modal-about').click(function () { $(this).hide() });
+	$('div#about').click(function (e) {
+		e.stopPropagation();
+	});
+	
 	/****** CLICKING OUTSIDE MODAL TO GET OUT OF MODAL - RECIPE PREVIEW MODAL ******/
 	$('div#modal-recipe-ingredients').click(function () {
 		$(this).hide()
@@ -259,7 +275,7 @@ $("document").ready(function () {
 	});
 
 	/****** CLICKING OUTSIDE MODAL TO GET OUT OF MODAL - SAVED RECIPES MODAL ******/
-	$('div#saved-recipes-modal').click(function () { $(this).hide() });
+	$('div#modal-saved-recipes').click(function () { $(this).hide() });
 	$('div#saved-recipes').click(function (e) {
 		e.stopPropagation();
 	});
@@ -328,7 +344,7 @@ $("document").ready(function () {
 	function getSaved(event) {
 		event.preventDefault()
 		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))][0]
-		$("#saved-recipes-modal").css("display", "inline")
+		$("#modal-saved-recipes").css("display", "inline")
 		$("#saved-recipes-list").children().remove()
 		// logic that lets the user know if there aren't any saved recipes
 		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
