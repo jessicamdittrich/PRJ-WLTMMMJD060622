@@ -21,7 +21,7 @@ $("document").ready(function () {
 	var savedRecipes = []
 
 	/****** RANDOM (FOOD) QUOTES API ******/
-	fetch('https://famous-quotes4.p.rapidapi.com/random?category=food&count=50', {
+	fetch('https://famous-quotes4.p.rapidapi.com/random?category=food&count=60', {
 		method: 'GET',
 		headers: {
 			'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com',
@@ -39,26 +39,22 @@ $("document").ready(function () {
 
 			/****** SHOWING RANDOM QUOTE ON PAGE LOAD ******/
 			for (var i = 0; i < data.length; i++) {
-					quoteText.textContent = data[i].text;
-					quoteAuthor.textContent = data[i].author;
+			quoteText.textContent = data[i].text;
+			quoteAuthor.textContent = data[i].author;
 			}
 
-			/****** CYCLING THROUGH TO SHOW 1 OF THE 50 PULLED QUOTES EVERY 2 MINUTES ******/
-			function timedLoop() {
-				var i = 0;
-				var a = data[i].text;
-
-				setTimeout(function () {
-					quoteText.textContent = data[i].text;
-					quoteAuthor.textContent = data[i].author;
+			/****** CYCLING THROUGH TO SHOW 1 OF THE 50 PULLED QUOTES EVERY 1 MINUTE ******/
+			var headings = data;
+			var i = 0;
+			var intervalId = setInterval(function () {
+				quoteText.textContent = headings[i].text;
+				quoteAuthor.textContent = headings[i].author;
+				if (i == (headings.length - 1)) {
+					i = 0;
+				} else {
 					i++;
-					if (i < a.length) {
-						timedLoop();
-					}
-				}, 120000)
-			}
-			timedLoop();
-
+				}
+			}, 60000)
 		});
 
 	// Initializing a function that takes the user inputs and add them to an array of ingredients to be searched. Also attaching a button that calls this function
@@ -72,10 +68,10 @@ $("document").ready(function () {
 		if (ingredientsChosen.includes(ingredient) == false) {
 			ingredientsChosen.push(ingredient);
 			ingredientList();
-		/****** THIS DOES NOT WORK YET ******/
-		//} else if (ingredient == "") {
-		//	ingredientsChosen.remove(ingredient);
-		//	$("#modal-no-ingredients").css("display", "inline");
+			/****** THIS DOES NOT WORK YET ******/
+			//} else if (ingredient == "") {
+			//	ingredientsChosen.remove(ingredient);
+			//	$("#modal-no-ingredients").css("display", "inline");
 		}
 	}
 
@@ -199,16 +195,23 @@ $("document").ready(function () {
 		}
 		// after retrieving the specific data, populate the modal that will show it
 		$("#modal-recipe-ingredients").children(".our-modal").prepend($("<h3>" + recipeList[index] + "</h3>"))
-		$("#modal-recipe-ingredients").children(".our-modal").children("div").prepend($("<a href =" + recipeURL[index] + " target='_blank'><button id=\"modal-recipe-ingredients-directions-button\" class=\"button\">Directions</button></a>"))
+		$("#modal-recipe-ingredients").children(".our-modal").children("div").prepend($("<a href =" + recipeURL[index] + " target='_blank'><button id=\"modal-recipe-ingredients-directions-button\" class=\"button\">Go to recipe</button></a>"))
 		$("#modal-recipe-ingredients").css("display", "inline")
 	}
 
 	// makes the ingredients list modal initalized above disappear when instructed to
-	$("#modal-recipe-ingredients-back-button").click(function() {
+	$("#modal-recipe-ingredients-back-button").click(function () {
 		$("#modal-recipe-ingredients").css("display", "none")
 		$("#modal-recipe-ingredients").children(".our-modal").children("div").children(":first").remove()
 		$("#modal-recipe-ingredients").children(".our-modal").children("h3").remove()
 		$("#recipe-ingredients-list").children("li").remove()
+	})
+
+	/****** HOME BUTTON ******/
+	$("#home-button").click(function () {
+		$("#given-recipes").css("display", "none");
+		$("#chosen-ingredients").css("display", "none");
+		$("#quotes").css("display", "block")
 	})
 
 	// DISPLAYING ADDED INGREDIENTS WHEN BUTTON IS PRESSED
@@ -244,6 +247,12 @@ $("document").ready(function () {
 		$("#modal-no-recipes").css("display", "none")
 	})
 
+	/****** CLICKING OUTSIDE MODAL TO GET OUT OF MODAL - RECIPE PREVIEW MODAL ******/
+	$('div#modal-recipe-ingredients').click(function () { $(this).hide() });
+	$('div#recipe-ingredients').click(function (e) {
+		e.stopPropagation();
+	});
+
 	/****** CLICKING OUTSIDE MODAL TO GET OUT OF MODAL - SAVED RECIPES MODAL ******/
 	$('div#saved-recipes-modal').click(function () { $(this).hide() });
 	$('div#saved-recipes').click(function (e) {
@@ -271,9 +280,9 @@ $("document").ready(function () {
 		var recipeName = $(target).siblings(":first")[0].innerText
 		var index = recipeList.indexOf(recipeName)
 		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
-			savedRecipes = [{name: recipeList[index], link: recipeURL[index], image: imageList[index]}]
+			savedRecipes = [{ name: recipeList[index], link: recipeURL[index], image: imageList[index] }]
 		} else {
-			savedRecipes.unshift({name: recipeList[index], link: recipeURL[index], image: imageList[index]})
+			savedRecipes.unshift({ name: recipeList[index], link: recipeURL[index], image: imageList[index] })
 		}
 		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
 		target.textContent = "Saved"
@@ -301,7 +310,7 @@ $("document").ready(function () {
 			localStorage.setItem("Saved", JSON.stringify(savedRecipes))
 			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
 		} else {
-			for (var i = 0; i <savedRecipes.length; i++) {
+			for (var i = 0; i < savedRecipes.length; i++) {
 				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[i].link + " target='_blank'><p>" + savedRecipes[i].name + "</p><img src = " + savedRecipes[i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
 			}
 		}
@@ -320,7 +329,7 @@ $("document").ready(function () {
 		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
 			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
 		} else {
-			for (var i = 0; i <savedRecipes.length; i++) {
+			for (var i = 0; i < savedRecipes.length; i++) {
 				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[i].link + " target='_blank'><p>" + savedRecipes[i].name + "</p><img src = " + savedRecipes[i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
 			}
 		}
@@ -340,7 +349,7 @@ $("document").ready(function () {
 			localStorage.setItem("Saved", JSON.stringify(savedRecipes))
 			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
 		} else {
-			for (var i = 0; i <savedRecipes.length; i++) {
+			for (var i = 0; i < savedRecipes.length; i++) {
 				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[i].link + " target='_blank'><p>" + savedRecipes[i].name + "</p><img src = " + savedRecipes[i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
 			}
 		}
