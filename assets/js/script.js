@@ -17,11 +17,6 @@ $("document").ready(function () {
 	var ingredientsChosen = []
 	var recipeURL = []
 	var savedRecipes = []
-	// retrieves saved recipes from localStorage on load
-	if (JSON.parse(localStorage.getItem("Saved")) === null) {
-	} else {
-		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))]
-	}
 
 	/****** RANDOM (FOOD) QUOTES API ******/
 	fetch('https://famous-quotes4.p.rapidapi.com/random?category=food&count=50', {
@@ -93,7 +88,6 @@ $("document").ready(function () {
 		// clears the recipe section of any existing recipes
 		$("#recipes-list").children().remove()
 		searchURL = "https://yummly2.p.rapidapi.com/feeds/search?start=0&maxResult=18&q=" + ingredientsChosen
-		console.log(searchURL)
 		fetch(searchURL, options)
 			.then(function (response) {
 				return response.json()
@@ -101,25 +95,21 @@ $("document").ready(function () {
 			.then(function (data) {
 				// stores the WHOLE data of every recipe
 				recipeData = data.feed
-				console.log(recipeData)
 				// stores ONLY the recipe names into an array
 				recipeList = []
 				for (var i = 0; i < recipeData.length; i++) {
 					recipeList.push(recipeData[i].content.details.name)
 				}
-				console.log(recipeList)
 				// stores the WHOLE data of every ingredient in each recipe
 				ingredientData = []
 				for (var i = 0; i < recipeData.length; i++) {
 					ingredientData.push(recipeData[i].content.ingredientLines)
 				}
-				console.log(ingredientData)
 				// stores a link to an image that represents the finished dish for each recipe
 				imageList = []
 				for (var i = 0; i < recipeData.length; i++) {
 					imageList.push(recipeData[i].content.details.images[0].hostedLargeUrl)
 				}
-				console.log(imageList)
 				recipeURL = []
 				for (var i = 0; i < recipeData.length; i++) {
 					recipeURL.push(recipeData[i].content.details.directionsUrl)
@@ -222,10 +212,18 @@ $("document").ready(function () {
 	// Initializing function to retrieve relevant data to save a recipe to localStorage
 	$("#recipes-list").on("click", ".fav-button", save)
 	function save(event) {
+		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))][0]
 		var target = event.target
 		var recipeName = $(target).siblings().children(":first")[0].innerText
 		var index = recipeList.indexOf(recipeName)
-		savedRecipes.unshift({ name: recipeList[index], link: recipeURL[index], image: imageList[index] })
+
+		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
+			savedRecipes = [{name: recipeList[index], link: recipeURL[index], image: imageList[index]}]
+			console.log(savedRecipes)
+		} else {
+			savedRecipes.unshift({name: recipeList[index], link: recipeURL[index], image: imageList[index]})
+			console.log(savedRecipes)
+		}
 		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
 	}
 
@@ -233,30 +231,43 @@ $("document").ready(function () {
 	$("#saved-button").click(getSaved)
 	function getSaved(event) {
 		event.preventDefault()
-		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))]
+		savedRecipes = [JSON.parse(localStorage.getItem("Saved"))][0]
+		console.log(savedRecipes)
 		$("#saved-recipes-modal").css("display", "inline")
-		if (savedRecipes[0] == null || savedRecipes[0] == undefined) {
+		$("#saved-recipes-list").children().remove()
+		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
 			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
 		} else {
-			for (var i = 0; i < savedRecipes[0].length; i++) {
-				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[0][i].link + " target='_blank'><p>" + savedRecipes[0][i].name + "</p><img src = " + savedRecipes[0][i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
+
+			for (var i = 0; i <savedRecipes.length; i++) {
+				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[i].link + " target='_blank'><p>" + savedRecipes[i].name + "</p><img src = " + savedRecipes[i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
 			}
 		}
 	}
 
-	// $("#saved-recipes-modal").on("click", $(".removeSaved-button"), removeSaved)
-	// function removeSaved(event) {
-	// 	var target = event.target
-	// 	var index = target.parentElement.id
-	// 	savedRecipes[0].splice(index, 1)
-	// 	localStorage.setItem("Saved", JSON.stringify(savedRecipes))
-	// 	if (savedRecipes[0] == null || savedRecipes[0] == undefined) {
-	// 		$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
-	// 	} else {
-	// 		for (var i = 0; i <savedRecipes[0].length; i++) {
-	// 			$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[0][i].link + " target='_blank'><p>" + savedRecipes[0][i].name + "</p><img src = " + savedRecipes[0][i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
-	// 		}
-	// 	}
-	// }
+	$("#saved-recipes-list").on("click", ".removeSaved-button", removeSaved)
+	function removeSaved(event) {
+		var target = event.target
+		var index = target.parentElement.id
+		savedRecipes.splice(index, 1)
+		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
+		$("#saved-recipes-list").children().remove()
+		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
+			savedRecipes = []
+			localStorage.setItem("Saved", JSON.stringify(savedRecipes))
+			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
+		} else {
+			for (var i = 0; i <savedRecipes.length; i++) {
+				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[i].link + " target='_blank'><p>" + savedRecipes[i].name + "</p><img src = " + savedRecipes[i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
+			}
+		}
+	}
 
+	$("#saved-recipes").on("click", "#clear-all-button", clearSaved)
+	function clearSaved(event) {
+		savedRecipes = []
+		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
+		$("#saved-recipes-list").children().remove()
+		$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
+	}
 }); //CODE ABOVE THIS LINE
