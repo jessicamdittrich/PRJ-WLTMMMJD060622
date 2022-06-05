@@ -11,6 +11,7 @@ html, body {
     font-family: var(--font);
     font-size: 20px;
     background-color: var(--offwhite);
+    scroll-behavior: smooth;
 }
 
 .logotype {
@@ -21,11 +22,59 @@ html, body {
     user-select: none;
 }
 
+/* ***** NAVIGATION ***** */
+#navigation {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    right: 0;
+    background-color: rgba(245, 245, 245, .8);
+    z-index: 9999;
+}
+
+#navigation .logotype {
+    font-size: 30px;
+    margin-left: 25px;
+}
+
+#navigation ul {
+    position: fixed;
+    top: 9px;
+    right: 25px;
+    padding: 0;
+}
+
+#navigation ul li {
+   display: inline;
+   margin-left: 20px;
+}
+
+#navigation ul li button {
+    border: none;
+    height: 25px;
+    width: 60px;
+    font-family: var(--font);
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--red);
+    background-color: rgba(245, 245, 245, 0);
+}
+
+#navigation ul li button a {
+    color: var(--red);
+}
+
+#navigation ul li button:hover, #navigation ul li button a:hover {
+    color: var(--dkgrey);
+}
+
 /* ***** MAIN TOP SECTION W/ LOGOTYPE & PARAGRAPH ***** */
 
 #main {
     text-align: center;
-    margin-top: -25px;
+    margin-top: 25px;
 }
 
 #main img {
@@ -271,12 +320,14 @@ html, body {
     font-weight: bolder;
     line-height: 28px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 #given-recipes ul li img {
     margin: 10px 0;
     width: 100%;
     border-radius: 5px;
+    cursor: pointer;
 }
 
 #given-recipes ul li button {
@@ -316,6 +367,11 @@ html, body {
     background-color: var(--red);
     border: 2px solid var(--red);
     border-radius: 5px;
+}
+
+#given-recipes div button a {
+    text-decoration: none;
+    color: var(--offwhite);
 }
 
 #given-recipes div button:hover {
@@ -383,30 +439,70 @@ html, body {
     display: none;
 }
 
-/* ***** SAVED RECIPES MODAL ***** */
+/* ***** ABOUT MODAL ***** */
 
-#saved-recipes-modal {
+#modal-about {
     display: none;
 }
 
-#saved-recipes-modal #saved-recipes {
-    height: 70%;
-    width: 70%;
-    top: 15%;
-    left: 15%;
-    overflow-y: scroll;
-    z-index: 501;
+#modal-about #about {
+    height: 60%;
+    width: 60%;
+    top: 20%;
+    left: 20%;
 }
 
-#saved-recipes h3 {
+#modal-about #about h3 {
     font-family: 'Orelega One', cursive;
     font-size: 40px;
 }
 
-#saved-recipes ul {
+#modal-about #about ul{
+    margin: 25px auto;
+}
+
+#modal-about #about ul li {
+    margin-bottom: 50px;
+}
+
+/* ***** RECIPE PREVIEW & SAVED RECIPES MODAL ***** */
+
+#modal-saved-recipes, #modal-recipe-ingredients {
+    display: none;
+}
+
+#modal-saved-recipes #saved-recipes::-webkit-scrollbar, #modal-recipe-ingredients #recipe-ingredients::-webkit-scrollbar {
+    display: none;
+  }
+
+#modal-saved-recipes #saved-recipes, #modal-recipe-ingredients #recipe-ingredients {
+    height: 70%;
+    width: 70%;
+    top: 15%;
+    left: 15%;
+    vertical-align: middle;
+    overflow-y: scroll;
+    z-index: 501;
+}
+
+#saved-recipes h3, #recipe-ingredients h3 {
+    font-family: 'Orelega One', cursive;
+    font-size: 40px;
+    text-transform: lowercase;
+}
+
+#saved-recipes ul, #recipe-ingredients ul {
+    margin: 25px auto;
     padding: 0;
+    vertical-align: middle;
+}
+
+#saved-recipes ul {
+    text-align: left;;
+}
+
+#saved-recipes span, #recipe-ingredients ul {
     text-align: center;
-    vertical-align: top;
 }
 
 #saved-recipes #nothing-saved-text {
@@ -425,6 +521,10 @@ html, body {
     color: var(--offwhite);
     background-color: var(--red);
     border-radius: 7px;
+}
+
+#recipe-ingredients ul li {
+    text-transform: lowercase;
 }
 
 /*#saved-recipes li:last-child {
@@ -459,11 +559,17 @@ html, body {
     font-weight: bold;
     text-transform: uppercase;
     letter-spacing: 1px;
-    color: var(--offwhite);
-    background-color: var(--red);
-    border: 1px solid var(--red);
+    color: var(--red);
+    background-color: var(--offwhite);
+    border: 1px solid var(--offwhite);
     border-radius: 5px;
     cursor: pointer;
+}
+
+#saved-recipes ul li button:hover {
+    color: var(--offwhite);
+    background-color: var(--dkgrey);
+    border-color: var(--dkgrey);
 }
 
 #saved-recipes div {
@@ -481,12 +587,6 @@ html, body {
     background-color: var(--red);
     border: 2px solid var(--red);
     border-radius: 5px;
-}
-
-#saved-recipes ul li button:hover {
-    color: var(--dkgrey);
-    background-color: var(--offwhite);
-    border-color: var(--offwhite);
 }
 
 #saved-recipes div button:hover {
