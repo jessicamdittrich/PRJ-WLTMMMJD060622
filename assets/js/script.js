@@ -69,7 +69,7 @@ $("document").ready(function () {
 		}
 		target.parentElement.remove()
 	})
-	
+
 	// Initializing search function that takes the user input and fetches the recipe API. Also attaching a button that would call this function
 	$("#search-button").click(search)
 	function search(event) {
@@ -151,10 +151,11 @@ $("document").ready(function () {
 	function getIngredient(event) {
 		var target = event.target
 		var index = target.parentElement.id
+		$("#recipe-ingredients-list").append($("<li>Time to cook: " + recipeData[index].content.details.totalTime + "</li>"))
 		var recipeIngredients = []
 		var ingredientArray = ingredientData[index]
 		for (var i = 0; i < ingredientArray.length; i++) {
-			recipeIngredients.push(ingredientArray[i].wholeLine)
+			recipeIngredients.push(ingredientArray[i].ingredient)
 		}
 		for (var i = 0; i < recipeIngredients.length; i++) {
 			$("#recipe-ingredients-list").append($("<li>" + recipeIngredients[i] + "</li>"))
@@ -197,12 +198,6 @@ $("document").ready(function () {
 		$("#modal-about").css("display", "none")
 	});
 
-	// DISPLAYING ADDED INGREDIENTS WHEN BUTTON IS PRESSED
-	$("#add-button").click(function () {
-		$('#quotes').css('display', 'none'); /****** HIDING QUOTES DIV WHEN INGREDIENTS DIV SHOWS ******/
-		$("#chosen-ingredients").css("display", "block")
-	})
-
 	// Remove recipe list when GO BACK button is pressed
 	$("#given-back-button").click(function () {
 		$("#given-recipes").css("display", "none")
@@ -232,7 +227,7 @@ $("document").ready(function () {
 	$('div#about').click(function (e) {
 		e.stopPropagation();
 	});
-	
+
 	/****** CLICKING OUTSIDE MODAL TO GET OUT OF MODAL - RECIPE PREVIEW MODAL ******/
 	$('div#modal-recipe-ingredients').click(function () {
 		$(this).hide()
@@ -367,15 +362,13 @@ $("document").ready(function () {
 			return response.json();
 		})
 		.then(function (data) {
-			//console.log(data);
-
 			var quoteText = document.getElementById('quote-text');
 			var quoteAuthor = document.getElementById('quote-author');
 
 			/****** SHOWING RANDOM QUOTE ON PAGE LOAD ******/
 			for (var i = 0; i < data.length; i++) {
-			quoteText.textContent = data[i].text;
-			quoteAuthor.textContent = data[i].author;
+				quoteText.textContent = data[i].text;
+				quoteAuthor.textContent = data[i].author;
 			}
 
 			/****** CYCLING THROUGH TO SHOW 1 OF THE 50 PULLED QUOTES EVERY 1 MINUTE ******/
@@ -391,4 +384,16 @@ $("document").ready(function () {
 				}
 			}, 60000)
 		});
+
+	// CREATING COLLAPSABLE MENU FOR MOBILE
+	const targetDiv = document.getElementById("mobile-nav");
+	const btn = document.getElementById("collaps-btn");
+	btn.onclick = function () {
+		if (targetDiv.style.display !== "none") {
+			targetDiv.style.display = "none";
+		} else {
+			targetDiv.style.display = "block";
+		}
+	};
+
 }); //CODE ABOVE THIS LINE
