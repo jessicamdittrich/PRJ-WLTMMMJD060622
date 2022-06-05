@@ -65,22 +65,14 @@ $("document").ready(function () {
 		// simply replacing the space in the search with %2C%20 so that it can be used in the search function below
 		ingredient = ingredient.replace(" ", "%2C%20")
 		// makes sure there is no repeating ingredient in the search
-		if (ingredientsChosen.includes(ingredient) == false) {
+		if  (ingredientsChosen.includes(ingredient) == false) {
 			ingredientsChosen.push(ingredient);
 			ingredientList();
-			/****** THIS DOES NOT WORK YET ******/
-			//} else if (ingredient == "") {
-			//	ingredientsChosen.remove(ingredient);
-			// 
-		} else if (ingredient == false) {
+			// no ingredients modal appears when no ingredient is added
+		} if (ingredient == null || ingredient == undefined || ingredient == "") {
 			$("#modal-no-ingredients").css("display", "inline");
 		}
 	}
-
-	// no ingredients modal pops up when nothing is added
-	$("#add-button").click(function isEmpty() {
-		$("#modal-no-ingredients").css("display", "inline");
-	})
 
 	// Initializing search function that takes the user input and fetches the recipe API. Also attaching a button that would call this function
 	$("#search-button").click(search)
