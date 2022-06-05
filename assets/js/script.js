@@ -151,10 +151,11 @@ $("document").ready(function () {
 	function getIngredient(event) {
 		var target = event.target
 		var index = target.parentElement.id
+		$("#recipe-ingredients-list").append($("<li>Time to cook: " + recipeData[index].content.details.totalTime + "</li>"))
 		var recipeIngredients = []
 		var ingredientArray = ingredientData[index]
 		for (var i = 0; i < ingredientArray.length; i++) {
-			recipeIngredients.push(ingredientArray[i].wholeLine)
+			recipeIngredients.push(ingredientArray[i].ingredient)
 		}
 		for (var i = 0; i < recipeIngredients.length; i++) {
 			$("#recipe-ingredients-list").append($("<li>" + recipeIngredients[i] + "</li>"))
@@ -191,12 +192,6 @@ $("document").ready(function () {
 	$("#about-back-button").click(function () {
 		$("#modal-about").css("display", "none")
 	});
-
-	// DISPLAYING ADDED INGREDIENTS WHEN BUTTON IS PRESSED
-	$("#add-button").click(function () {
-		$('#quotes').css('display', 'none'); /****** HIDING QUOTES DIV WHEN INGREDIENTS DIV SHOWS ******/
-		$("#chosen-ingredients").css("display", "block")
-	})
 
 	// Remove recipe list when GO BACK button is pressed
 	$("#given-back-button").click(function () {
@@ -362,8 +357,6 @@ $("document").ready(function () {
 			return response.json();
 		})
 		.then(function (data) {
-			//console.log(data);
-
 			var quoteText = document.getElementById('quote-text');
 			var quoteAuthor = document.getElementById('quote-author');
 
