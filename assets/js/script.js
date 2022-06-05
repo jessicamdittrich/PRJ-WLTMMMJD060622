@@ -20,43 +20,6 @@ $("document").ready(function () {
 	var recipeURL = []
 	var savedRecipes = []
 
-	/****** RANDOM (FOOD) QUOTES API ******/
-	fetch('https://famous-quotes4.p.rapidapi.com/random?category=food&count=60', {
-		method: 'GET',
-		headers: {
-			'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com',
-			'X-RapidAPI-Key': 'bc864ba75dmsh17d4908165347bap1a2a98jsnf1350501706b'
-		}
-	})
-		.then(function (response) {
-			return response.json();
-		})
-		.then(function (data) {
-			//console.log(data);
-
-			var quoteText = document.getElementById('quote-text');
-			var quoteAuthor = document.getElementById('quote-author');
-
-			/****** SHOWING RANDOM QUOTE ON PAGE LOAD ******/
-			for (var i = 0; i < data.length; i++) {
-			quoteText.textContent = data[i].text;
-			quoteAuthor.textContent = data[i].author;
-			}
-
-			/****** CYCLING THROUGH TO SHOW 1 OF THE 50 PULLED QUOTES EVERY 1 MINUTE ******/
-			var headings = data;
-			var i = 0;
-			var intervalId = setInterval(function () {
-				quoteText.textContent = headings[i].text;
-				quoteAuthor.textContent = headings[i].author;
-				if (i == (headings.length - 1)) {
-					i = 0;
-				} else {
-					i++;
-				}
-			}, 60000)
-		});
-
 	// Initializing a function that takes the user inputs and add them to an array of ingredients to be searched. Also attaching a button that calls this function
 	$("#add-button").click(add)
 	function add(event) {
@@ -64,17 +27,49 @@ $("document").ready(function () {
 		ingredient = $(".input").val()
 		// simply replacing the space in the search with %2C%20 so that it can be used in the search function below
 		ingredient = ingredient.replace(" ", "%2C%20")
+		// makes sure that the user actually inputted something
+		if (ingredient == "" || ingredient == null || ingredient == undefined || ingredient == "%2C%20") {
+			$("#modal-no-ingredients").css("display", "block");
+		}
 		// makes sure there is no repeating ingredient in the search
-		if (ingredientsChosen.includes(ingredient) == false) {
+		if (ingredientsChosen.includes(ingredient) == false && ingredient !== "" && ingredient !== "%2C%20") {
 			ingredientsChosen.push(ingredient);
 			ingredientList();
-			/****** THIS DOES NOT WORK YET ******/
-			//} else if (ingredient == "") {
-			//	ingredientsChosen.remove(ingredient);
-			//	$("#modal-no-ingredients").css("display", "inline");
+			$('#quotes').css('display', 'none'); /****** HIDING QUOTES DIV WHEN INGREDIENTS DIV SHOWS ******/
+			$("#chosen-ingredients").css("display", "block")
+			$("#given-recipes").css("display", "none")
 		}
 	}
 
+	/****** ADDING INGREDIENTS TO "YOUR INGREDIENTS CHOSEN" ******/
+	// also creates list elements as well as a button element in the HTML
+	function ingredientList() {
+		var ingredientsUl = document.getElementById('ingredients-list');
+		var ingredientLi = document.createElement('li');
+		var removeButton = document.createElement('button');
+		removeButton.textContent = '✖';
+		ingredientLi.innerHTML = $(".input").val()
+		for (var i = 0; i < ingredientsChosen.length; i++) {
+			ingredientsUl.appendChild(ingredientLi);
+			ingredientLi.appendChild(removeButton);
+			removeButton.setAttribute("id", "remove-button")
+		}
+	};
+
+	// initializing a function to remove an ingredient from the ingredient list element and the ingredientChosen array
+	// also delegates the function to the remove buttons
+	$("#ingredients-list").on("click", "#remove-button", function (event) {
+		var target = event.target
+		var removeThis = target.parentElement.textContent
+		removeThis = removeThis.replace("✖", "")
+		removeThis = removeThis.replace(" ", "%2C%20")
+		var index = ingredientsChosen.indexOf(removeThis)
+		if (index > -1) {
+			ingredientsChosen.splice(index, 1);
+		}
+		target.parentElement.remove()
+	})
+	
 	// Initializing search function that takes the user input and fetches the recipe API. Also attaching a button that would call this function
 	$("#search-button").click(search)
 	function search(event) {
@@ -118,35 +113,6 @@ $("document").ready(function () {
 			.then(populateRecipeList)
 			.catch(err => console.error(err))
 	}
-
-	/****** ADDING INGREDIENTS TO "YOUR INGREDIENTS CHOSEN" ******/
-	// also creates list elements as well as a button element in the HTML
-	function ingredientList() {
-		var ingredientsUl = document.getElementById('ingredients-list');
-		var ingredientLi = document.createElement('li');
-		var removeButton = document.createElement('button');
-		removeButton.textContent = '✖';
-		ingredientLi.innerHTML = $(".input").val()
-		for (var i = 0; i < ingredientsChosen.length; i++) {
-			ingredientsUl.appendChild(ingredientLi);
-			ingredientLi.appendChild(removeButton);
-			removeButton.setAttribute("id", "remove-button")
-		}
-	};
-
-	// initializing a function to remove an ingredient from the ingredient list element and the ingredientChosen array
-	// also delegates the function to the remove buttons
-	$("#ingredients-list").on("click", "#remove-button", function (event) {
-		var target = event.target
-		var removeThis = target.parentElement.textContent
-		removeThis = removeThis.replace("✖", "")
-		removeThis = removeThis.replace(" ", "%2C%20")
-		var index = ingredientsChosen.indexOf(removeThis)
-		if (index > -1) {
-			ingredientsChosen.splice(index, 1);
-		}
-		target.parentElement.remove()
-	})
 
 	// This function populates the recipes div
 	function populateRecipeList() {
@@ -212,6 +178,8 @@ $("document").ready(function () {
 		$("#given-recipes").css("display", "none");
 		$("#chosen-ingredients").css("display", "none");
 		$("#quotes").css("display", "block")
+		ingredientsChosen = []
+		$("#ingredients-list").children().remove()
 	})
 
 	/****** ABOUT BUTTON SHOWS MODAL *******/
@@ -234,11 +202,6 @@ $("document").ready(function () {
 	$("#given-back-button").click(function () {
 		$("#given-recipes").css("display", "none")
 		$("#chosen-ingredients").css("display", "block")
-	})
-
-	// Remove recipe list when ADD button is pressed
-	$("#add-button").click(function () {
-		$("#given-recipes").css("display", "none")
 	})
 
 	// Remove saved recipes modal when GO BACK button is pressed
@@ -312,35 +275,6 @@ $("document").ready(function () {
 		target.setAttribute("class", "recipeSaved-button")
 	}
 
-	// a modifaction of the removeSaved function with added logic find which saved recipe to remove
-	$("#recipes-list").on("click", ".recipeSaved-button", removeSaved2)
-	function removeSaved2(event) {
-		var target = event.target
-		var removeThis = $(target).siblings("p")[0].innerText
-		var thisThing
-		var index
-		for (var i = 0; i < savedRecipes.length; i++) {
-			thisThing = savedRecipes[i].name
-			if (thisThing == removeThis) {
-				index = i
-				savedRecipes.splice(index, 1)
-			}
-		}
-		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
-		$("#saved-recipes-list").children().remove()
-		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
-			savedRecipes = []
-			localStorage.setItem("Saved", JSON.stringify(savedRecipes))
-			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
-		} else {
-			for (var i = 0; i < savedRecipes.length; i++) {
-				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[i].link + " target='_blank'><p>" + savedRecipes[i].name + "</p><img src = " + savedRecipes[i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
-			}
-		}
-		target.textContent = "Add to saved"
-		target.setAttribute("class", "fav-button")
-	}
-
 	// Initializing function to retrieve localStorage and put it into the saved recipes div
 	$("#saved-button").click(getSaved)
 	function getSaved(event) {
@@ -378,6 +312,35 @@ $("document").ready(function () {
 		}
 	}
 
+	// a modifaction of the removeSaved function with added logic find which saved recipe to remove
+	$("#recipes-list").on("click", ".recipeSaved-button", removeSaved2)
+	function removeSaved2(event) {
+		var target = event.target
+		var removeThis = $(target).siblings("p")[0].innerText
+		var thisThing
+		var index
+		for (var i = 0; i < savedRecipes.length; i++) {
+			thisThing = savedRecipes[i].name
+			if (thisThing == removeThis) {
+				index = i
+				savedRecipes.splice(index, 1)
+			}
+		}
+		localStorage.setItem("Saved", JSON.stringify(savedRecipes))
+		$("#saved-recipes-list").children().remove()
+		if (savedRecipes == null || savedRecipes == undefined || savedRecipes == "") {
+			savedRecipes = []
+			localStorage.setItem("Saved", JSON.stringify(savedRecipes))
+			$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
+		} else {
+			for (var i = 0; i < savedRecipes.length; i++) {
+				$("#saved-recipes-list").append($("<li id = " + i + "><a href=" + savedRecipes[i].link + " target='_blank'><p>" + savedRecipes[i].name + "</p><img src = " + savedRecipes[i].image + "></a><button class= \"removeSaved-button\">Remove</button></li>"))
+			}
+		}
+		target.textContent = "Add to saved"
+		target.setAttribute("class", "fav-button")
+	}
+
 	// function that clears ALL saved recipes
 	$("#saved-recipes").on("click", "#clear-all-button", clearSaved)
 	function clearSaved(event) {
@@ -386,4 +349,41 @@ $("document").ready(function () {
 		$("#saved-recipes-list").children().remove()
 		$("#saved-recipes-list").append($("<span id=\"nothing-saved-text\">You have nothing saved yet</span>"))
 	}
+
+	/****** RANDOM (FOOD) QUOTES API ******/
+	fetch('https://famous-quotes4.p.rapidapi.com/random?category=food&count=60', {
+		method: 'GET',
+		headers: {
+			'X-RapidAPI-Host': 'famous-quotes4.p.rapidapi.com',
+			'X-RapidAPI-Key': 'bc864ba75dmsh17d4908165347bap1a2a98jsnf1350501706b'
+		}
+	})
+		.then(function (response) {
+			return response.json();
+		})
+		.then(function (data) {
+			//console.log(data);
+
+			var quoteText = document.getElementById('quote-text');
+			var quoteAuthor = document.getElementById('quote-author');
+
+			/****** SHOWING RANDOM QUOTE ON PAGE LOAD ******/
+			for (var i = 0; i < data.length; i++) {
+			quoteText.textContent = data[i].text;
+			quoteAuthor.textContent = data[i].author;
+			}
+
+			/****** CYCLING THROUGH TO SHOW 1 OF THE 50 PULLED QUOTES EVERY 1 MINUTE ******/
+			var headings = data;
+			var i = 0;
+			var intervalId = setInterval(function () {
+				quoteText.textContent = headings[i].text;
+				quoteAuthor.textContent = headings[i].author;
+				if (i == (headings.length - 1)) {
+					i = 0;
+				} else {
+					i++;
+				}
+			}, 60000)
+		});
 }); //CODE ABOVE THIS LINE
