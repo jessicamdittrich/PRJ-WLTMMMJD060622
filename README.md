@@ -20,11 +20,9 @@ Collaboration: For the purpose of producing this project, team members (i.e., Wi
 - Mubashera: API Research, JavaScript Support, Slides, ReadMe
 - Jessica: Brand Elements, HTML, CSS, Bulma, Fetch Famous Quotes API, JavaScript Support, Slides, API Research
 
+## Reflection: Possible Improvements For The Future
 ## Final product
 The website, after a final completion, includes html, css and javascript files. The javascript file houses the two APIs used in the project. The UI displays an image of an animated fridge, the logo, a brief description, a search bar and several sections dedicated to displaying recipies, saved recipies and a quotation factor. 
-
 *insert screenshot here*
-
-## Reflection: Possible Improvements For The Future
 
 
