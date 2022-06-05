@@ -69,7 +69,7 @@ $("document").ready(function () {
 		}
 		target.parentElement.remove()
 	})
-	
+
 	// Initializing search function that takes the user input and fetches the recipe API. Also attaching a button that would call this function
 	$("#search-button").click(search)
 	function search(event) {
@@ -222,7 +222,7 @@ $("document").ready(function () {
 	$('div#about').click(function (e) {
 		e.stopPropagation();
 	});
-	
+
 	/****** CLICKING OUTSIDE MODAL TO GET OUT OF MODAL - RECIPE PREVIEW MODAL ******/
 	$('div#modal-recipe-ingredients').click(function () {
 		$(this).hide()
@@ -362,8 +362,8 @@ $("document").ready(function () {
 
 			/****** SHOWING RANDOM QUOTE ON PAGE LOAD ******/
 			for (var i = 0; i < data.length; i++) {
-			quoteText.textContent = data[i].text;
-			quoteAuthor.textContent = data[i].author;
+				quoteText.textContent = data[i].text;
+				quoteAuthor.textContent = data[i].author;
 			}
 
 			/****** CYCLING THROUGH TO SHOW 1 OF THE 50 PULLED QUOTES EVERY 1 MINUTE ******/
@@ -379,4 +379,16 @@ $("document").ready(function () {
 				}
 			}, 60000)
 		});
+
+	// CREATING COLLAPSABLE MENU FOR MOBILE
+	const targetDiv = document.getElementById("mobile-nav");
+	const btn = document.getElementById("collaps-btn");
+	btn.onclick = function () {
+		if (targetDiv.style.display !== "none") {
+			targetDiv.style.display = "none";
+		} else {
+			targetDiv.style.display = "block";
+		}
+	};
+
 }); //CODE ABOVE THIS LINE
