@@ -12,7 +12,7 @@ A total of two APIs are used in this project:
 - The first API,' Yummly' (https://rapidapi.com/apidojo/api/yummly2/) is used to discover recipies in accordance to the ingredients posted by the user, to create a collection of possible dishes 
 - The second API, 'Famous Quotes' (https://rapidapi.com/saicoder/api/famous-quotes4/) is used to generate a new quote every few seconds to add an element of fun 
 
-Collaboration: For the purpose of producing this project, team members (i.e., William Liao, Taylor Moss, Mubashera Mashraka & Jessica Dittrich) divided up the work into certain duties and thus were assigned tasks. 
+Collaboration: For the purpose of producing this project, team members (i.e., William Liao, Taylor Moss, Mubashera Mashraka & Jessica Dittrich) divided up the work into certain duties and thus were assigned tasks. Further information regarding that is under 'Assigned Tasks'. 
 
 ## Assigned tasks
 - Will: Initial Concept, API Research, Fetch Recipe API, JavaScript Lead
@@ -20,13 +20,11 @@ Collaboration: For the purpose of producing this project, team members (i.e., Wi
 - Mubashera: API Research, JavaScript Support, Slides, ReadMe
 - Jessica: Brand Elements, HTML, CSS, Bulma, Fetch Famous Quotes API, JavaScript Support, Slides, API Research
 
+## Final product
+The website, after a final completion, includes html, css and javascript files. The javascript file houses the two APIs used in the project. The UI displays an image of an animated fridge, the logo, a brief description, a search bar and several sections dedicated to displaying recipies, saved recipies and a quotation factor. 
 
-## End result 
-Blurb on how it ended up 
-What we like about it 
-## Screenshot 
+*insert screenshot here*
 
-## Final product:
+## Reflection: Possible Improvements For The Future
 
-*reflection*
 
