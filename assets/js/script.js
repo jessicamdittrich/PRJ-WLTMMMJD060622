@@ -81,7 +81,10 @@ $("document").ready(function () {
 		$("#recipes-list").children().remove()
 		// the fetch function that would gather all the recipe data we need and store them to respective variables
 		searchURL = "https://yummly2.p.rapidapi.com/feeds/search?start=0&maxResult=18&q=" + ingredientsChosen
-		fetch(searchURL, options)
+		if (ingredientsChosen == "" || ingredientsChosen == null || ingredientsChosen == undefined || ingredientsChosen == "%2C%20") {
+			$("#modal-no-ingredients").css("display", "block");
+		} else {
+			fetch(searchURL, options)
 			.then(function (response) {
 				return response.json()
 			})
@@ -112,6 +115,7 @@ $("document").ready(function () {
 			// after all the variables are defined by the fetch function, calls a function to populate the recipe div
 			.then(populateRecipeList)
 			.catch(err => console.error(err))
+		}
 	}
 
 	// This function populates the recipes div
@@ -208,6 +212,8 @@ $("document").ready(function () {
 	// Remove no ingredients modal when GO BACK button is pressed
 	$("#modal-ingredients-back-button").click(function () {
 		$("#modal-no-ingredients").css("display", "none")
+		$("#given-recipes").css("display", "none")
+		$("#chosen-ingredients").css("display", "block")
 	})
 
 	// Remove no recipes modal when GO BACK button is pressed
