@@ -82,7 +82,7 @@ $("document").ready(function () {
 		// clears the recipe div so that it may be repopulated
 		$("#recipes-list").children().remove()
 		// the fetch function that would gather all the recipe data we need and store them to respective variables
-		searchURL = "https://edamam-recipe-search.p.rapidapi.com/search?q=" + ingredientsChosen
+		searchURL = "https://edamam-recipe-search.p.rapidapi.com/search?q=" + ingredientsChosen + "&to=30"
 		if (ingredientsChosen == "" || ingredientsChosen == null || ingredientsChosen == undefined || ingredientsChosen == "%2C%20") {
 			$("#modal-no-ingredients").css("display", "block");
 		} else {
