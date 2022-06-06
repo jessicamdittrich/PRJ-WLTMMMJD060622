@@ -4,8 +4,8 @@ $("document").ready(function () {
 	const options = {
 		method: 'GET',
 		headers: {
-			'X-RapidAPI-Host': 'yummly2.p.rapidapi.com',
-			'X-RapidAPI-Key': 'bc864ba75dmsh17d4908165347bap1a2a98jsnf1350501706b'
+			'X-RapidAPI-Host': 'edamam-recipe-search.p.rapidapi.com',
+			'X-RapidAPI-Key': '67eb59ab29msh40e600ec911fcb1p1f829fjsn39cb0c4650f1'
 		}
 	};
 
@@ -80,38 +80,42 @@ $("document").ready(function () {
 		// clears the recipe div so that it may be repopulated
 		$("#recipes-list").children().remove()
 		// the fetch function that would gather all the recipe data we need and store them to respective variables
-		searchURL = "https://yummly2.p.rapidapi.com/feeds/search?start=0&maxResult=18&q=" + ingredientsChosen
-		fetch(searchURL, options)
+		searchURL = "https://edamam-recipe-search.p.rapidapi.com/search?q=" + ingredientsChosen
+		if (ingredientsChosen == "" || ingredientsChosen == null || ingredientsChosen == undefined || ingredientsChosen == "%2C%20") {
+			$("#modal-no-ingredients").css("display", "block");
+		} else {
+			fetch(searchURL, options)
 			.then(function (response) {
 				return response.json()
 			})
 			.then(function (data) {
 				// stores the WHOLE data of every recipe
-				recipeData = data.feed
+				recipeData = data.hits
 				// stores ONLY the recipe names into an array
 				recipeList = []
 				for (var i = 0; i < recipeData.length; i++) {
-					recipeList.push(recipeData[i].content.details.name)
+					recipeList.push(recipeData[i].recipe.label)
 				}
 				// stores the WHOLE data of every ingredient in each recipe
 				ingredientData = []
 				for (var i = 0; i < recipeData.length; i++) {
-					ingredientData.push(recipeData[i].content.ingredientLines)
+					ingredientData.push(recipeData[i].recipe.ingredients)
 				}
 				// stores the links to images that represents the finished dish for each recipe
 				imageList = []
 				for (var i = 0; i < recipeData.length; i++) {
-					imageList.push(recipeData[i].content.details.images[0].hostedLargeUrl)
+					imageList.push(recipeData[i].recipe.image)
 				}
 				// stores the links to the full recipes
 				recipeURL = []
 				for (var i = 0; i < recipeData.length; i++) {
-					recipeURL.push(recipeData[i].content.details.directionsUrl)
+					recipeURL.push(recipeData[i].recipe.url)
 				}
 			})
 			// after all the variables are defined by the fetch function, calls a function to populate the recipe div
 			.then(populateRecipeList)
 			.catch(err => console.error(err))
+		}
 	}
 
 	// This function populates the recipes div
@@ -155,7 +159,7 @@ $("document").ready(function () {
 		var recipeIngredients = []
 		var ingredientArray = ingredientData[index]
 		for (var i = 0; i < ingredientArray.length; i++) {
-			recipeIngredients.push(ingredientArray[i].ingredient)
+			recipeIngredients.push(ingredientArray[i].text)
 		}
 		for (var i = 0; i < recipeIngredients.length; i++) {
 			$("#recipe-ingredients-list").append($("<li>" + recipeIngredients[i] + "</li>"))
@@ -208,6 +212,8 @@ $("document").ready(function () {
 	// Remove no ingredients modal when GO BACK button is pressed
 	$("#modal-ingredients-back-button").click(function () {
 		$("#modal-no-ingredients").css("display", "none")
+		$("#given-recipes").css("display", "none")
+		$("#chosen-ingredients").css("display", "block")
 	})
 
 	// Remove no recipes modal when GO BACK button is pressed
