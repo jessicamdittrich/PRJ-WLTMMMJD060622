@@ -12,7 +12,17 @@
 </head>
 <body>
 
-    <section class="section">
+    <section id="top-of-page" class="section">
+
+        <div id="navigation">
+            <span class="logotype">WhatTheFridge.</span>
+            <img src="assets/images/mobile-menu.png" id="collaps-btn" alt="mobile menu icon">
+            <ul id="mobile-nav">
+                <li><button id="home-button" class="button"><a href="#top-of-page">Home</a></button></li>
+                <li><button id="about-button" class="button">About</button></li>
+                <li><button id="saved-button" class="button">Saved</button></li>
+            </ul>
+        </div>
 
         <div id="main" class="container">
             <img src="assets/images/fridge.png" />
@@ -25,23 +35,20 @@
         <div id="search" class="container">
             <form>
                 <ul>
-                    <li><input class="input" type="text" placeholder="tell me what you have in your fridge"></li>
-                    <li><button id="add-button" class="button">Add</button></li>
-                    <li><button id="saved-button" class="button">Saved</button></li>
+                    <li><input class="input" type="text" placeholder="tell me what you have in your fridge" type="reset"></li>
+                    <li><button id="add-button" class="button">Add Ingredient</button></li>
                 </ul>
             </form>
+        </div>
+
+        <div id="quotes" class="container">
+            <span class="quotations">"</span><p id="quote-text"></p><span class="quotations">"</span>
+            <p id="quote-author"></p>
         </div>
 
         <div id="chosen-ingredients" class="container">
             <h3>your chosen ingredients</h3>
             <ul id="ingredients-list">
-                <li>icon | asparagus</li>
-                <li>icon | asparagus</li>
-                <li>icon | asparagus</li>
-                <li>icon | asparagus</li>
-                <li>icon | asparagus</li>
-                <li>icon | asparagus</li>
-                <li>icon | asparagus</li>
             </ul>
             <div>
                 <button id="search-button" class="button">Find Your Recipes</button>
@@ -54,30 +61,61 @@
 
             </ul>
             <div>
+                <button id="top-button" class="button"><a href="#top-of-page">Back To Top</a></button>
                 <button id="given-back-button" class="button">Go Back</button>
             </div>
         </div>
 
-        <div id="saved-recipes" class="container">
-            <h3>your saved recipes</h3>
-            <ul id="saved-recipes-list">
-            </ul>
-            <div>
-                <button id="saved-back-button" class="button">Go Back</button>
+        <div id="modal-about" class="our-modal-container">
+            <div id= "about" class="our-modal">
+                <h3>about</h3>
+                <ul>
+                    <li><span class="logotype">WhatTheFridge.</span> is an interactive recipe finder based on what a user has in their fridge (or cupboard). This also ties into searching for recipes based on ingredients that are near the end of their shelf life. </li>
+                    <li>This is a collabortion by:<br> Jessica Dittrich<br> William Liao<br> Mubashera Mashraka<br> Taylor Moss</li>
+                </ul>
+                <div>
+                    <button id="about-back-button" class="button">Go Back</button>
+                </div>
             </div>
         </div>
 
-        <div id="modal-no-ingredients" class="our-modal">
-            <p>Sorry, <span class="logotype">WhatTheFridge.</span> doesn't contain that ingredient.</p>
-            <div>
-                <button id="modal-ingradients-back-button" class="button">Go Back</button>
+        <div id="modal-recipe-ingredients" class="our-modal-container">
+            <div id= "recipe-ingredients" class="our-modal">
+                <ul id="recipe-ingredients-list">
+                </ul>
+                <div>
+                    <button id="modal-recipe-ingredients-back-button" class="button">Go Back</button>
+                </div>
             </div>
         </div>
 
-        <div id="modal-no-recipes" class="our-modal">
-            <p>Sorry, <span class="logotype">WhatTheFridge.</span> couldn't find any recipes.</p>
-            <div>
-                <button id="modal-ingradients-back-button" class="button">Go Back</button>
+        <div id="modal-saved-recipes" class="our-modal-container">
+            <div id="saved-recipes" class="our-modal">
+                <h3>your saved recipes</h3>
+                <ul id="saved-recipes-list">
+                </ul>
+                <div>
+                    <button id="clear-all-button" class="button">Clear All</button>
+                    <button id="saved-back-button" class="button">Go Back</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-no-ingredients" class="our-modal-container">
+            <div id="no-ingredients" class="our-modal">
+                <p>Sorry, you haven't entered an ingredient. Please enter an ingredient and then click add.</p>
+                <div>
+                    <button id="modal-ingredients-back-button" class="button">Go Back</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="modal-no-recipes" class="our-modal-container">
+            <div id="no-recipes" class="our-modal">
+                <p>Sorry, <span class="logotype">WhatTheFridge.</span> couldn't find any recipes.</p>
+                <div>
+                    <button id="modal-recipes-back-button" class="button">Go Back</button>
+                </div>
             </div>
         </div>
 
@@ -85,7 +123,7 @@
 
       <footer>
         <span class="logotype">WhatTheFridge.</span>
-        <p>A Collaboration By: William Liao & Taylor Moss & Mubashera Mashraka & Jessica Dittrich</p>
+        <p>A Collaboration By: Jessica Dittrich & William Liao & Mubashera Mashraka & Taylor Moss</p>
       </footer>
     
 
