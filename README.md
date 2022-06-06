@@ -15,8 +15,8 @@ Mobile User Interface
 
 ## External Sources
 - CSS Framework: "Bulma" is used to create the very minimal wireframe.
-- First API: "Yummly" is used to discover recipies in accordance to the ingredients posted by the user, to create a collection of possible dishes 
-- Second API, "Famous Quotes" is used to generate a new quote every few seconds to add an element of fun 
+- First API: "Recipe Search & Diet" is used to discover recipies in accordance to the ingredients posted by the user, to create a collection of possible dishes 
+- Second API: "Famous Quotes" is used to generate a new quote every few seconds to add an element of fun 
 
 ## Assigned Tasks
 - Will: Initial Concept, API Research, Fetch Recipe API, JavaScript Lead
