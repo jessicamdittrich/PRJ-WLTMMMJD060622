@@ -550,10 +550,6 @@ html, body {
     text-transform: lowercase;
 }
 
-/*#saved-recipes li:last-child {
-    text-align: left;
-} need to play around with this - everything is centered even if only 1*/
-
 #saved-recipes ul li a {
     color: var(--offwhite);
     text-decoration: none;
