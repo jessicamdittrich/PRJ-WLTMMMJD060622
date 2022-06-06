@@ -45,14 +45,14 @@ html, body {
 }
 
 #navigation img {
-    max-width: 30px;
+    max-width: 38px;
     cursor: pointer;
     display: none;
 }
 
 #navigation ul li {
    display: inline;
-   margin-left: 20px;
+   margin-left: 25px;
 }
 
 #navigation ul li button {
@@ -61,9 +61,9 @@ html, body {
     width: 60px;
     font-family: var(--font);
     font-size: 20px;
-    font-weight: bolder;
+    font-weight: bold;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     color: var(--red);
     background-color: rgba(245, 245, 245, 0);
 }
@@ -298,16 +298,20 @@ html, body {
 }
 
 #given-recipes ul {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     padding: 0;
-    text-align: center;
+    text-align: left;
     vertical-align: top;
 }
 
 #given-recipes ul li {
     display: inline-block;
+    flex: 3 0 33%;
+    max-width: 29%;
     margin: 25px;
     padding: 25px;
-    width: 28.5%;
     height: fit-content;
     text-align: center;
     color: var(--offwhite);
@@ -461,9 +465,9 @@ html, body {
   }
 
 #modal-about #about {
-    height: 70%;
+    height: 80%;
     width: 70%;
-    top: 15%;
+    top: 10%;
     left: 15%;
     overflow-y: scroll;
 }
@@ -492,9 +496,9 @@ html, body {
   }
 
 #modal-saved-recipes #saved-recipes, #modal-recipe-ingredients #recipe-ingredients {
-    height: 70%;
+    height: 80%;
     width: 70%;
-    top: 15%;
+    top: 10%;
     left: 15%;
     vertical-align: middle;
     overflow-y: scroll;
@@ -514,7 +518,9 @@ html, body {
 }
 
 #saved-recipes ul {
-    text-align: left;;
+    text-align: left;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 #saved-recipes span, #recipe-ingredients ul {
@@ -529,9 +535,10 @@ html, body {
 
 #saved-recipes ul li {
     display: inline-block;
+    flex: 3 0 33%;
+    max-width: 28%;
     margin: 25px;
     padding: 25px;
-    width: 25%;
     height: fit-content;
     text-align: center;
     color: var(--offwhite);
@@ -635,13 +642,27 @@ footer p {
 }
 
 /* MEDIA QUERIES */
-    /* QUICK FIX */
+    /* QUICK FIXES */
+    @media screen and (max-width: 1408px) {
+        #given-recipes ul li {
+            flex: 3 0 33%;
+            max-width: 28%;
+        }
+
+        #saved-recipes ul li {
+            flex: 3 0 33%;
+            max-width: 26%
+        }
+    }
     @media screen and (max-width: 1215px) {
         #given-recipes ul li {
-            width: 44.25%;
+            flex: 3 0 33%;
+            max-width: 27%;
         }
+        
         #saved-recipes ul li {
-            width: 40%;
+            flex: 1 0 50%;
+            max-width: 42.5%;
         }
 
         .our-modal {
@@ -714,14 +735,19 @@ footer p {
         #given-recipes ul li {
             display: inline-block;
             margin: 5px 5px 10px 5px;
-            width: 48.5%;
             height: fit-content;
-        }
+            flex: 1 0 50%;
+            max-width: 48%;
+        } 
 
         #saved-recipes ul li {
-            margin: 5px 0;
-            width: 90%;
-            height: fit-content;
+            margin: 5px 5px;
+            flex: 1 0 50%;
+            max-width: 48%;
+        }
+
+        #given-recipes div button {
+            margin-top: 10px;
         }
 
         #given-recipes div button, #saved-recipes div button {
@@ -745,12 +771,18 @@ footer p {
     @media screen and (max-width: 768px) {
         #navigation {
             background-color: var(--dkgrey);
+            height: 60px;
+            padding-top: 8px;
         }
-        
+
+        #navigation .logotype {
+            margin-top: 5px;
+        }
+
         #navigation img {
             display: inline;
             position: fixed;
-            top: 7px;
+            top: 11px;
             right: 15px;
         }
 
@@ -778,6 +810,32 @@ footer p {
             margin: 0 20px;
             text-align: justify;
         }
+
+        #quotes .quotations {
+            display: inline;
+            margin: 0 10px;
+            font-family: 'Orelega One', cursive;
+            font-size: 60px;
+            line-height: 20px;
+            color: var(--red);
+        }
+        
+        #quotes p {
+            display: inline;
+            font-family: 'Orelega One', cursive;
+            font-size: 25px;
+            line-height: 60px;
+        }
+        
+        #quotes #quote-author {
+            display: block;
+            font-family: var(--font);
+            font-size: 18px;
+            font-weight: bolder;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--red);
+        }
         
         #chosen-ingredients ul li{
             margin: 5px 0;
@@ -786,13 +844,17 @@ footer p {
         
         #given-recipes ul, #saved-recipes ul {
             text-align: justify;
+            display: inline-block;
+        }
+
+        #given-recipes ul li {
+            flex: 0 0 100%;
         }
         
         #given-recipes ul li, #saved-recipes ul li {
             display: block;
             margin: 5px 0 10px 0;
-            width: 100%;
-            /*height: 250px;*/
+            max-width: 100%;
         } 
 
         #given-recipes ul li img, #saved-recipes ul li img {
@@ -825,14 +887,30 @@ footer p {
             width: 100%;
         }
 
-        #given-recipes div button {
-            margin-top: 10px;
-        }
-
         #modal-about #about, #modal-saved-recipes #saved-recipes {
             height: 80%;
             width: 90%;
             top: 10%;
             left: 5%;
+        }
+    }
+
+    /* TABLETS */
+    @media screen and (max-width: 450px) {
+        #navigation .logotype {
+            margin-left: 15px;
+        }
+        
+        #main h1 {
+            font-size: 40px;
+        }
+
+        #search ul li input {
+            padding: 7px 0;
+        }
+
+        #search ul li input::placeholder {
+            padding: 7px 0;
+            font-size: 14px;
         }
     }
