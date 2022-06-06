@@ -39,6 +39,8 @@ $("document").ready(function () {
 			$("#chosen-ingredients").css("display", "block")
 			$("#given-recipes").css("display", "none")
 		}
+		// clears the input field after hitting add
+		$('input[type="text"], textarea').val('')
 	}
 
 	/****** ADDING INGREDIENTS TO "YOUR INGREDIENTS CHOSEN" ******/
@@ -155,7 +157,6 @@ $("document").ready(function () {
 	function getIngredient(event) {
 		var target = event.target
 		var index = target.parentElement.id
-		//$("#recipe-ingredients-list").append($("<li>Time to cook: " + recipeData[index].content.details.totalTime + "</li>"))
 		var recipeIngredients = []
 		var ingredientArray = ingredientData[index]
 		for (var i = 0; i < ingredientArray.length; i++) {
