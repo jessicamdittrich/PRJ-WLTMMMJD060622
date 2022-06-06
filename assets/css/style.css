@@ -786,6 +786,7 @@ footer p {
             width: 100%;
             left: 0;
             top: 45px;
+            padding-top: 10px;
             display: none;
         }
 
@@ -793,7 +794,7 @@ footer p {
             display: block;
             width: 100%;
             margin: 0;
-            padding: 7px;
+            padding: 9px;
             text-align: center;
             background-color: var(--dkgrey);
         }
@@ -891,7 +892,7 @@ footer p {
         }
     }
 
-    /* TABLETS */
+    /* SMALL SMALL SCREENS */
     @media screen and (max-width: 450px) {
         #navigation .logotype {
             margin-left: 15px;
