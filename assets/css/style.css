@@ -654,6 +654,10 @@ footer p {
 
     /* TABLETS */
     @media screen and (max-width: 992px) {
+        #navigation ul li button:hover, #navigation ul li button a:hover {
+            color: var(--red);
+        }
+
         #search ul li {
             display: block;
         }
@@ -761,7 +765,7 @@ footer p {
             display: block;
             width: 100%;
             margin: 0;
-            padding: 5px;
+            padding: 7px;
             text-align: center;
             background-color: var(--dkgrey);
         }
