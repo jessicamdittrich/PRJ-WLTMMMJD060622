@@ -25,7 +25,7 @@ Mobile User Interface
 - Jessica: Brand Elements, HTML, CSS, Bulma, Fetch Famous Quotes API, JavaScript Support, Slides, API Research
 
 ## Reflection
-Following completion of the project and intensive testing, we were all happy with the outcome aside from one thing. It was noticed that the API Yummly advertised that recipes were pulled based on ingredients but it was determined that was not the case. Repipes are pulled from title name which was not our intention with the project. Pulling ingredients seems to be a locked and paid feature. After finishing the project and creating everything surrounding this API, it was decided that we would not switch and proceed with this as it does still reach our target audience.
+Following completion of the project and intensive testing, we were all happy with the outcome aside from one thing. It was noticed that the API Yummly advertised that recipes were pulled based on ingredients but it was determined that was not the case. Repipes are pulled from title name which was not our intention with the project. Pulling ingredients seems to be a locked and paid feature. After finishing the project and creating everything surrounding this API, it was a chance taken to implement a new API (Recipe Search & Data) which worked and gave us the end result we were looking for.
 
 ## Final product
 [Click here to view](https://jessicamdittrich.github.io/PRJ-WTMJ060622/)
