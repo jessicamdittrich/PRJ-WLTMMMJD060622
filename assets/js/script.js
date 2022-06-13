@@ -87,36 +87,36 @@ $("document").ready(function () {
 			$("#modal-no-ingredients").css("display", "block");
 		} else {
 			fetch(searchURL, options)
-			.then(function (response) {
-				return response.json()
-			})
-			.then(function (data) {
-				// stores the WHOLE data of every recipe
-				recipeData = data.hits
-				// stores ONLY the recipe names into an array
-				recipeList = []
-				for (var i = 0; i < recipeData.length; i++) {
-					recipeList.push(recipeData[i].recipe.label)
-				}
-				// stores the WHOLE data of every ingredient in each recipe
-				ingredientData = []
-				for (var i = 0; i < recipeData.length; i++) {
-					ingredientData.push(recipeData[i].recipe.ingredients)
-				}
-				// stores the links to images that represents the finished dish for each recipe
-				imageList = []
-				for (var i = 0; i < recipeData.length; i++) {
-					imageList.push(recipeData[i].recipe.image)
-				}
-				// stores the links to the full recipes
-				recipeURL = []
-				for (var i = 0; i < recipeData.length; i++) {
-					recipeURL.push(recipeData[i].recipe.url)
-				}
-			})
-			// after all the variables are defined by the fetch function, calls a function to populate the recipe div
-			.then(populateRecipeList)
-			.catch(err => console.error(err))
+				.then(function (response) {
+					return response.json()
+				})
+				.then(function (data) {
+					// stores the WHOLE data of every recipe
+					recipeData = data.hits
+					// stores ONLY the recipe names into an array
+					recipeList = []
+					for (var i = 0; i < recipeData.length; i++) {
+						recipeList.push(recipeData[i].recipe.label)
+					}
+					// stores the WHOLE data of every ingredient in each recipe
+					ingredientData = []
+					for (var i = 0; i < recipeData.length; i++) {
+						ingredientData.push(recipeData[i].recipe.ingredients)
+					}
+					// stores the links to images that represents the finished dish for each recipe
+					imageList = []
+					for (var i = 0; i < recipeData.length; i++) {
+						imageList.push(recipeData[i].recipe.image)
+					}
+					// stores the links to the full recipes
+					recipeURL = []
+					for (var i = 0; i < recipeData.length; i++) {
+						recipeURL.push(recipeData[i].recipe.url)
+					}
+				})
+				// after all the variables are defined by the fetch function, calls a function to populate the recipe div
+				.then(populateRecipeList)
+				.catch(err => console.error(err))
 		}
 	}
 
@@ -387,8 +387,8 @@ $("document").ready(function () {
 			}, 60000)
 		});
 
-	// CREATING COLLAPSABLE MENU FOR MOBILE
-	const targetDiv = document.getElementById("mobile-nav");
+	// CREATING COLLAPSABLE MENU FOR MOBILE (OLD)
+	/*const targetDiv = document.getElementById("mobile-nav");
 	const btn = document.getElementById("collaps-btn");
 	btn.onclick = function () {
 		if (targetDiv.style.display !== "none") {
@@ -396,6 +396,12 @@ $("document").ready(function () {
 		} else {
 			targetDiv.style.display = "block";
 		}
-	};
+	};*/
+
+	// CREATING COLLAPSABLE MENU FOR MOBILE (NEW)
+	$("#collaps-btn").click(function() {
+		$("#mobile-nav").slideToggle( "slow", function() {
+		});
+	  });
 
 }); //CODE ABOVE THIS LINE
