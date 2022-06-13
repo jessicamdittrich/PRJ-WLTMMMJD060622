@@ -536,9 +536,9 @@ html, body {
 #saved-recipes ul li {
     display: inline-block;
     flex: 3 0 33%;
-    max-width: 28%;
-    margin: 25px;
-    padding: 25px;
+    max-width: 27.8%;
+    margin: 2.7%;
+    padding: 2.7%;
     height: fit-content;
     text-align: center;
     color: var(--offwhite);
@@ -639,6 +639,13 @@ footer p {
 
 /* MEDIA QUERIES */
     /* QUICK FIXES */
+    @media screen and (max-width: 1475px) {
+        #saved-recipes ul li {
+            flex: 3 0 33%;
+            max-width: 27.6%
+        }
+    }
+
     @media screen and (max-width: 1408px) {
         #given-recipes ul li {
             flex: 3 0 33%;
@@ -647,7 +654,9 @@ footer p {
 
         #saved-recipes ul li {
             flex: 3 0 33%;
-            max-width: 26%
+            max-width: 27.7%;
+            margin: 2.8%;
+            padding: 2.8%;
         }
     }
     @media screen and (max-width: 1215px) {
@@ -658,7 +667,9 @@ footer p {
         
         #saved-recipes ul li {
             flex: 1 0 50%;
-            max-width: 42.5%;
+            max-width: 45%;
+            margin: 2.5%;
+            padding: 2.5%;
         }
 
         .our-modal {
@@ -738,8 +749,10 @@ footer p {
 
         #saved-recipes ul li {
             margin: 5px 5px;
-            flex: 1 0 50%;
-            max-width: 48%;
+            flex: 2 0 50%;
+            max-width: 44.9%;
+            margin: 2.5%;
+            padding: 2.5%;
         }
 
         #given-recipes div button {
@@ -895,7 +908,7 @@ footer p {
     /* SMALL SMALL SCREENS */
     @media screen and (max-width: 450px) {
         #navigation .logotype {
-            margin-left: 15px;
+            margin-left: 10px;
         }
         
         #main h1 {
